@@ -1,10 +1,11 @@
 import React from 'react';
-import './componentStyles/panel.css';
 import PropTypes from 'prop-types';
+
+import styles from './componentStyles/panel.module.css';
 
 const Panel = (props) => (
   <div
-    id='panel'
+    className={styles.container}
     style={{ backgroundColor: props.backgroundColor, color: props.textColor }}
   >
     {props.children}
@@ -14,6 +15,11 @@ const Panel = (props) => (
 Panel.propTypes = {
   backgroundColor: PropTypes.string,
   textColor: PropTypes.string,
+};
+
+Panel.defaultProps = {
+  backgroundColor: 'white',
+  textColor: 'rgba(0, 0, 0, 0,8)',
 };
 
 export default Panel;

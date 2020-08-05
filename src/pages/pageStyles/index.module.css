@@ -1,0 +1,83 @@
+@import '../../constants.css';
+
+:root {
+  --header-height: 103px;
+}
+
+h2 {
+  text-align: center;
+  font-size: 36px;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-weight: 400;
+}
+
+h3 {
+  font-weight: 700;
+  font-size: 20px;
+  margin-left: var(--side-margin);
+  margin-right: var(--side-margin);
+  margin-top: 2em;
+  width: fit-content;
+}
+
+h3:hover {
+  text-decoration: underline;
+}
+
+p {
+  font-size: 20px;
+  margin-left: var(--side-margin);
+  margin-right: var(--side-margin);
+  line-height: 28px;
+  text-align: justify;
+}
+
+h2::before {
+  display: block;
+  content: ' ';
+  margin-top: calc(-1 * var(--header-height));
+  height: var(--header-height);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.logosContainer {
+  text-align: center;
+  position: relative;
+}
+
+img {
+  max-width: 20em;
+  margin: 2em 3em 2em;
+}
+
+.highlight {
+  height: 100%;
+  width: calc(100% + 0.6rem);
+  background-color: rgb(255, 207, 140);
+  margin-top: -0.6rem;
+  margin-bottom: -0.6rem;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  margin-left: -0.3rem;
+  padding-left: 0.3rem;
+}
+
+.center {
+  text-align: center;
+}
+
+.smallA {
+  color: black;
+}
+
+.smallA:hover {
+  transition: none;
+  color: black;
+  text-decoration: underline;
+}
+
+.anchor:hover {
+  cursor: default;
+}

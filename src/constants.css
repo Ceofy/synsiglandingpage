@@ -1,5 +1,6 @@
 :root {
-  --spacing-margin-x: 2em;
-  --spacing-margin-y: 1em;
-  --button-spacing: 1.75em;
+  --spacing-margin-x: 2rem;
+  --spacing-margin-y: 1rem;
+  --button-bottom-spacing: 1.75rem;
+  --side-margin: 5em;
 }

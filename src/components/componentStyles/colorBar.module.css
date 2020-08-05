@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  position: relative;
+  overflow: visible;
+}
+
+.pointer {
+  margin: 0;
+  margin-bottom: 1px;
+  display: block;
+  position: relative;
+}

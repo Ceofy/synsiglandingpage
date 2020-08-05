@@ -1,9 +1,0 @@
-@import '../../constants.css';
-
-#buttonsContainer {
-    display: inline-block;
-    vertical-align: middle;
-    margin: var(--spacing-margin-y) var(--spacing-margin-x);
-    position: relative;
-    top: calc(var(--button-spacing) / 2);
-}

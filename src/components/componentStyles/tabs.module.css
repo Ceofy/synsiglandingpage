@@ -1,0 +1,6 @@
+@import '../../constants.css';
+
+.outerTabs {
+  margin-left: var(--side-margin);
+  margin-right: var(--side-margin);
+}

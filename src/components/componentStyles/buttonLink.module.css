@@ -6,17 +6,23 @@
   --arrow-size: 10px;
   --tooltip-offset: 20px;
   --tooltip-border-radius: 15px;
+  --button-side-spacing: 1em;
 }
 
-form {
-  margin-bottom: var(--button-spacing);
+.vertical {
+  margin-bottom: var(--button-bottom-spacing);
+}
+
+.horizontal {
+  padding: 0 var(--button-side-spacing);
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 
 button {
   font-style: normal;
   font-weight: 100;
-  font-size: 28px;
-  line-height: 41px;
+  font-size: 28px !important;
   display: flex;
   align-items: center;
   text-align: center;
@@ -26,6 +32,8 @@ button {
   background-color: rgb(255, 140, 0);
   color: white;
   border: none;
+  border-radius: 0.125rem;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
 button:hover {
@@ -33,20 +41,21 @@ button:hover {
   color: rgb(255, 140, 0, 0.9);
   font-weight: 800;
   cursor: pointer;
-  font-size: 26.1px;
+  letter-spacing: -0.55px;
   border-radius: 1px;
 }
 
-#buttonText {
+.buttonText {
   display: inline-block;
+  line-height: 41px;
   margin: auto;
 }
 
-#tooltip {
+.tooltip {
   position: relative;
 }
 
-#tooltip #tooltipText {
+.tooltip .tooltipText {
   visibility: hidden;
   width: var(--tooltip-width);
   height: var(--tooltip-height);
@@ -63,14 +72,15 @@ button:hover {
   align-items: center;
   font-size: 15px;
   transition-delay: 0s;
+  border: solid 2px #3d8dca;
 }
 
-#tooltip:hover #tooltipText {
+.tooltip:hover .tooltipText {
   visibility: visible;
   transition-delay: 0.3s;
 }
 
-#tooltip #tooltipText.top::after {
+.tooltip .tooltipText.top::after {
   content: ' ';
   position: absolute;
   top: 100%; /* At the bottom of the tooltip */
@@ -81,7 +91,7 @@ button:hover {
   border-color: white transparent transparent transparent;
 }
 
-#tooltip #tooltipText.bottom::after {
+.tooltip .tooltipText.bottom::after {
   content: ' ';
   position: absolute;
   bottom: 100%;
@@ -95,20 +105,22 @@ button:hover {
 .top {
   bottom: 100%;
   left: 50%;
-  transform: translate(calc(-1 * (var(--tooltip-width) / 2)), calc(-1 * var(--tooltip-offset)));
+  transform: translate(
+    calc(-1 * (var(--tooltip-width) / 2)),
+    calc(-1 * var(--tooltip-offset))
+  );
 }
 
 .bottom {
   top: 100%;
   left: 50%;
-  transform: translate(calc(-1 * (var(--tooltip-width) / 2)), var(--tooltip-offset));
+  transform: translate(
+    calc(-1 * (var(--tooltip-width) / 2)),
+    var(--tooltip-offset)
+  );
 }
 
-#tooltipText {
-  visibility: hidden;
-}
-
-#tooltipConnector {
+.tooltipConnector {
   width: var(--tooltip-width);
   background-color: transparent;
   height: calc(var(--tooltip-offset) + var(--tooltip-border-radius));
@@ -117,14 +129,15 @@ button:hover {
   visibility: hidden;
 }
 
-#tooltip:hover #tooltipConnector {
+.tooltip:hover .tooltipConnector {
   visibility: visible;
+  transition-delay: 0.3s;
 }
 
-#tooltipConnector.top {
+.tooltipConnector.top {
   transform: translate(-50%, 0);
 }
 
-#tooltipConnector.bottom {
+.tooltipConnector.bottom {
   transform: translate(-50%, 0);
 }

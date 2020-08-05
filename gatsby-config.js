@@ -1,8 +1,8 @@
 module.exports = {
-  pathPrefix: '/title',
+  pathPrefix: '/nest/temp/synsig',
   siteMetadata: {
-    title: `Ideker Lab Title Project Page`,
-    description: `Ideker Lab project page for Title ()`,
+    title: `Ideker Lab SynSig Project`,
+    description: `Ideker Lab project page for SynSig (Synaptic Signatures)`,
     author: `UCSD Ideker Lab`,
   },
   plugins: [
@@ -36,9 +36,20 @@ module.exports = {
       },
     },
     `gatsby-transformer-remark`,
-
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `${__dirname}/src/images`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `data`,
+        path: `${__dirname}/src/data/`,
+      },
+    },
+    `gatsby-transformer-csv`,
   ],
 };

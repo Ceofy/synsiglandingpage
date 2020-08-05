@@ -1,0 +1,149 @@
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_desc_disabled:before,
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:after {
+  right: 8px !important;
+  bottom: 0.6em !important;
+}
+
+thead,
+td {
+  text-align: center;
+}
+
+.table > thead:last-child {
+  display: none;
+}
+
+.table {
+  white-space: nowrap;
+  text-align: center;
+}
+
+label {
+  padding-bottom: 0 !important;
+}
+
+.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  align-items: baseline;
+}
+
+/* Center table */
+.dataTables_wrapper {
+  max-width: fit-content;
+  margin: auto;
+}
+
+.w-auto {
+  margin: auto;
+}
+
+.dataTables_wrapper > .row:first-child {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.dataTables_wrapper > .row:first-child > :first-child {
+  float: right;
+  max-width: 50%;
+  justify-content: flex-end;
+}
+
+.dataTables_wrapper > .row:first-child > :last-child {
+  float: left;
+  max-width: 50%;
+  justify-content: flex-start;
+  display: block !important;
+}
+
+.dataTables_wrapper > .row:last-child {
+  text-align: left;
+}
+
+/* Define minimum column widths */
+
+.tableTabs th:first-child {
+  min-width: 111px;
+}
+
+.tableTabs > div:first-of-type th:nth-child(2),
+.tableTabs > div:nth-of-type(2) th:nth-child(2) {
+  min-width: 169px;
+}
+
+.tableTabs > div:first-of-type th:nth-child(4),
+.tableTabs > div:first-of-type th:nth-child(5),
+.tableTabs > div:first-of-type th:nth-child(6),
+.tableTabs > div:first-of-type th:nth-child(7),
+.tableTabs > div:nth-of-type(2) th:nth-child(4),
+.tableTabs > div:nth-of-type(2) th:nth-child(5),
+.tableTabs > div:nth-of-type(2) th:nth-child(6),
+.tableTabs > div:nth-of-type(2) th:nth-child(7) {
+  min-width: 124px;
+}
+
+.outerTabs > div:nth-of-type(3) div:first-of-type th:nth-child(2),
+.outerTabs > div:nth-of-type(3) div:first-of-type th:nth-child(3),
+.outerTabs > div:nth-of-type(3) div:nth-of-type(2) th:nth-child(2),
+.outerTabs > div:nth-of-type(3) div:nth-of-type(2) th:nth-child(3) {
+  min-width: 124px;
+}
+
+.outerTabs > div:nth-of-type(3) div:nth-of-type(3) th:nth-child(2),
+.outerTabs > div:nth-of-type(3) div:nth-of-type(3) th:nth-child(3),
+.outerTabs > div:nth-of-type(3) div:nth-of-type(3) th:nth-child(4),
+.outerTabs > div:nth-of-type(3) div:nth-of-type(3) th:nth-child(5),
+.outerTabs > div:nth-of-type(3) div:nth-of-type(3) th:nth-child(6) {
+  min-width: 0;
+}
+
+/* Change table colors */
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+table.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.09) !important;
+  transition: 0s !important;
+}
+
+/* Text align */
+
+.tableTabs th:first-child,
+.tableTabs > div:first-of-type th:nth-child(2),
+.tableTabs > div:nth-of-type(2) th:nth-child(2),
+.tableTabs > div:nth-of-type(3) th:nth-child(7),
+.tableTabs td:first-child,
+.tableTabs > div:first-of-type td:nth-child(2),
+.tableTabs > div:nth-of-type(2) td:nth-child(2),
+.tableTabs > div:nth-of-type(3) td:nth-child(7) {
+  text-align: left;
+}
+
+.outerTabs > div:nth-of-type(3) div:first-of-type th:nth-child(2),
+.outerTabs > div:nth-of-type(3) div:first-of-type td:nth-child(2) {
+  text-align: center;
+}
+
+/* Pagination row */
+.dataTables_paginate ul {
+  margin-left: 0;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: rgb(255, 140, 0) !important;
+}
+
+/* Change cursor 
+tr {
+  cursor: pointer;
+}
+*/

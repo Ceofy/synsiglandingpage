@@ -1,0 +1,37 @@
+.header {
+  background: #242428;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  height: 67px;
+  display: flex;
+  align-items: center;
+}
+
+.left {
+  vertical-align: middle;
+  padding: 0.5rem;
+  margin-left: 3.5rem;
+}
+
+.noUnderlineLink {
+  text-decoration: none;
+  color: #dddddd;
+  font-size: 28px;
+  font-weight: 300;
+}
+
+.noUnderlineLink:hover {
+  transition: none;
+  color: #dddddd;
+}
+
+.underlineLink {
+  composes: noUnderlineLink;
+}
+
+.underlineLink:hover {
+  text-decoration: underline;
+  transition: none;
+  color: #dddddd;
+}

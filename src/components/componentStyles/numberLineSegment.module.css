@@ -1,0 +1,17 @@
+.numberLineSegment {
+  border-top-width: 1px;
+  border-top-style: solid;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.rightTick {
+  border-right-width: 1px;
+  border-right-style: solid;
+}
+
+.leftTick {
+  border-left-width: 1px;
+  border-left-style: solid;
+}

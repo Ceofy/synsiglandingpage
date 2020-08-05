@@ -1,0 +1,36 @@
+@import '../../constants.css';
+
+:root {
+  --subtitle-left: 0;
+}
+
+h1 {
+  display: inline-block;
+  font-weight: 100;
+  color: white;
+  vertical-align: middle;
+  text-align: center;
+  margin: 0 var(--spacing-margin-x);
+}
+
+.text {
+  font-weight: 100;
+  margin: 0;
+  display: block;
+}
+
+.title {
+  composes: text;
+  font-size: 200px;
+}
+
+.subtitle {
+  composes: text;
+  font-size: 38px;
+  padding-top: 0;
+  left: var(--subtitle-left);
+}
+
+.titleDiv {
+  padding-bottom: 2em;
+}

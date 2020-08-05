@@ -1,14 +1,12 @@
-import React from 'react'
-import './componentStyles/topPanel.css'
+import React from 'react';
+import styles from './componentStyles/topPanel.module.css';
 
-const TopPanel = ({children}) => (
-  <div id='topDivWrapper'>
-    <div id='topDiv'>
-      <div id='topDivContents'>
-        {children}
-      </div>
+const TopPanel = ({ children }) => (
+  <div className={styles.background}>
+    <div className={styles.container}>
+      <div className={styles.contents}>{children}</div>
     </div>
   </div>
-)
+);
 
-export default TopPanel
+export default TopPanel;

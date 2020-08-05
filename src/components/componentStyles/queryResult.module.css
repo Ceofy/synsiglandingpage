@@ -1,0 +1,78 @@
+@import '../../constants.css';
+
+.queryResult {
+  background-color: white;
+  padding: 1.25em 1.75em;
+  max-width: 50em;
+}
+
+.tableDivsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
+}
+
+.tableDiv {
+  margin: 0.5em 0;
+}
+
+.table {
+  margin: 0;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.bottomTable {
+  composes: table;
+  table-layout: auto;
+}
+
+.tbody {
+}
+
+.tr {
+}
+
+.td {
+  padding: 0;
+  padding-right: 3em;
+  border: 0;
+  text-align: left;
+  line-height: 1.5;
+  vertical-align: top;
+  white-space: normal;
+}
+
+.noWrapTd {
+  composes: td;
+  white-space: nowrap;
+}
+
+.header {
+  font-size: 18px;
+}
+
+.title {
+  width: fit-content;
+  height: fit-content;
+  font-weight: 800;
+  margin-bottom: 0.5em;
+}
+
+.subtitle {
+  color: gray;
+  white-space: normal;
+  margin-bottom: 0.25em;
+}
+
+.text {
+  font-weight: 300;
+  margin-bottom: 1em;
+  padding-right: 1em;
+}
+
+.colorBar {
+  margin-right: 1em;
+  margin-top: 0.2em;
+  max-width: 16em;
+  margin-bottom: -0.7em;
+}

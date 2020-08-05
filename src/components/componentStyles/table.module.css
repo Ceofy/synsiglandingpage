@@ -1,0 +1,9 @@
+@import '../../constants.css';
+
+.tableContainer {
+  font-size: 16px;
+}
+
+.innerTableContainer {
+  width: fit-content;
+}

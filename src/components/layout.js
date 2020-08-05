@@ -9,9 +9,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useStaticQuery, graphql } from 'gatsby';
 
-import CcmiHeader from './ccmiHeader';
 import Header from './header';
-import './componentStyles/layout.css';
+
+import styles from './componentStyles/layout.module.css';
 
 const Layout = (props) => {
   const data = useStaticQuery(graphql`
@@ -26,13 +26,13 @@ const Layout = (props) => {
 
   return (
     <>
-      <div id='headerWrapper'>
+      <div className={styles.headerContainer}>
         <Header siteTitle={data.site.siteMetadata.title} />
       </div>
-      <div id='mainDiv'>
+      <div className={styles.container}>
         <main>{props.children}</main>
         <footer style={{ backgroundColor: props.backgroundColor }}>
-          © {new Date().getFullYear()}, UC, San Diego / Built with
+          © {new Date().getFullYear()}, UC San Diego / Built with
           {` `}
           <a href='https://www.gatsbyjs.org'>Gatsby</a>
         </footer>
@@ -43,6 +43,11 @@ const Layout = (props) => {
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
+  backgroundColor: PropTypes.string,
+};
+
+Layout.defaultProps = {
+  backgroundColor: 'white',
 };
 
 export default Layout;
