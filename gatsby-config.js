@@ -1,5 +1,5 @@
 module.exports = {
-  pathPrefix: '/nest/temp/synsig',
+  pathPrefix: '/synsig',
   siteMetadata: {
     title: `Ideker Lab SynSig Project`,
     description: `Ideker Lab project page for SynSig (Synaptic Signatures)`,

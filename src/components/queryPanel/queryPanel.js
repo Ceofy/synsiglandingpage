@@ -9,12 +9,14 @@ import PropTypes from 'prop-types';
 import QueryForm from './queryForm';
 import QueryResult from './queryResult';
 
-import styles from './componentStyles/queryPanel.module.css';
+import styles from './queryPanelStyles/queryPanel.module.css';
 
 let suppTable1SynSigDict;
 let suppTable9EnSigDict;
+let coreGenesDict;
 let synSigAllFunctionTabDict;
 let enSigAllFunctionTabDict;
+let coreGenesAllFunctionTabDict;
 
 const QueryPanel = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
@@ -28,19 +30,27 @@ const QueryPanel = forwardRef((props, ref) => {
   //0 for no query, 1 for true, -1 for false
   const [queryIsValid, setQueryIsValid] = useState(0);
 
+  const [isCoreGene, setIsCoreGene] = useState(false);
+
   const [suppTable1SynSigValues, setSuppTable1SynSigValues] = useState();
-  const [allFunctionTabValues, setAllFunctionTabValues] = useState();
   const [suppTable9EnSigValues, setSuppTable9EnSigValues] = useState();
+  const [coreGeneValues, setCoreGeneValues] = useState();
+  const [allFunctionTabValues, setAllFunctionTabValues] = useState();
 
   //Get data
   useMountEffect(() => {
     suppTable1SynSigDict = listToDict(props.suppTable1SynSigData, 'Gene');
     suppTable9EnSigDict = listToDict(props.suppTable9EnSigData, 'Gene');
+    coreGenesDict = listToDict(props.coreGenesData, 'Gene');
     synSigAllFunctionTabDict = listToDict(
       props.synSigAllFunctionTabData,
       'Gene'
     );
     enSigAllFunctionTabDict = listToDict(props.enSigAllFunctionTabData, 'Gene');
+    coreGenesAllFunctionTabDict = listToDict(
+      props.coreGenesAllFunctionTabData,
+      'Gene'
+    );
   });
 
   //Handle query
@@ -55,7 +65,7 @@ const QueryPanel = forwardRef((props, ref) => {
     event.preventDefault();
 
     const upperQuery = query.toUpperCase();
-    if (upperQuery in suppTable1SynSigDict) {
+    if (upperQuery in suppTable1SynSigDict || upperQuery in coreGenesDict) {
       handleSearchQuery(upperQuery);
     } else if (upperQuery.length === 0) {
       setQueryIsValid(0);
@@ -68,13 +78,20 @@ const QueryPanel = forwardRef((props, ref) => {
 
   const handleSearchQuery = (gene) => {
     //Get relevant data
-    setSuppTable1SynSigValues(suppTable1SynSigDict[gene]);
-    setSuppTable9EnSigValues(suppTable9EnSigDict[gene]);
+    if (gene in suppTable1SynSigDict) {
+      setIsCoreGene(false);
+      setSuppTable1SynSigValues(suppTable1SynSigDict[gene]);
+      setSuppTable9EnSigValues(suppTable9EnSigDict[gene]);
 
-    if (gene in synSigAllFunctionTabDict) {
-      setAllFunctionTabValues(synSigAllFunctionTabDict[gene]);
+      if (gene in synSigAllFunctionTabDict) {
+        setAllFunctionTabValues(synSigAllFunctionTabDict[gene]);
+      } else {
+        setAllFunctionTabValues(enSigAllFunctionTabDict[gene]);
+      }
     } else {
-      setAllFunctionTabValues(enSigAllFunctionTabDict[gene]);
+      setIsCoreGene(true);
+      setCoreGeneValues(coreGenesDict[gene]);
+      setAllFunctionTabValues(coreGenesAllFunctionTabDict[gene]);
     }
 
     setQueryIsValid(1);
@@ -94,11 +111,18 @@ const QueryPanel = forwardRef((props, ref) => {
         handleSubmit={handleSubmit}
       />
       {queryIsValid === 1 ? (
-        <QueryResult
-          suppTable1SynSigValues={suppTable1SynSigValues}
-          suppTable9EnSigValues={suppTable9EnSigValues}
-          allFunctionTabValues={allFunctionTabValues}
-        />
+        isCoreGene ? (
+          <QueryResult
+            coreGeneValues={coreGeneValues}
+            allFunctionTabValues={allFunctionTabValues}
+          />
+        ) : (
+          <QueryResult
+            suppTable1SynSigValues={suppTable1SynSigValues}
+            suppTable9EnSigValues={suppTable9EnSigValues}
+            allFunctionTabValues={allFunctionTabValues}
+          />
+        )
       ) : null}
     </div>
   );
@@ -119,8 +143,10 @@ const listToDict = (list, key) => {
 QueryPanel.propTypes = {
   suppTable1SynSigData: PropTypes.array,
   suppTable9EnSigData: PropTypes.array,
+  coreGenesData: PropTypes.array,
   synSigAllFunctionTabData: PropTypes.array,
   enSigAllFunctionTabData: PropTypes.array,
+  coreGenesAllFunctionTabData: PropTypes.array,
 };
 
 export default QueryPanel;

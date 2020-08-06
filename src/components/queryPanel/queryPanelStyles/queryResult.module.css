@@ -1,4 +1,4 @@
-@import '../../constants.css';
+@import '../../../constants.css';
 
 .queryResult {
   background-color: white;
@@ -15,10 +15,19 @@
   margin: 0.5em 0;
 }
 
-.table {
+.fitTableDiv {
+  composes: tableDiv;
+  width: fit-content;
+}
+
+.fitTable {
   margin: 0;
-  table-layout: fixed;
   width: 100%;
+}
+
+.table {
+  composes: fitTable;
+  table-layout: fixed;
 }
 
 .bottomTable {

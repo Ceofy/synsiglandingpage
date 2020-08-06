@@ -1,4 +1,4 @@
-@import '../../constants.css';
+@import '../../../constants.css';
 
 .container {
   background-color: rgba(3, 120, 193, 0.85);
@@ -10,7 +10,7 @@
 }
 
 .background {
-  background-image: url(../../images/synapse.jpg);
+  background-image: url(../../../images/synapse.jpg);
   background-position-y: 20%;
   background-position-x: 0;
   min-height: 450px;

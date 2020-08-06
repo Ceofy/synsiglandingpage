@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from '../componentStyles/numberSegment.module.css';
+import styles from './colorBarStyles/numberSegment.module.css';
 
 const NumberSegment = (props) => {
   return (

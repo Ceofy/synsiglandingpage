@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Palette from './colorBar/palette';
-import NumberSegment from './colorBar/numberSegment';
-import NumberLineSegment from './colorBar/numberLineSegment';
+import Palette from './palette';
+import NumberSegment from './numberSegment';
+import NumberLineSegment from './numberLineSegment';
 
-import pointer from '../images/pointer.png';
+import pointer from '../../images/pointer.png';
 
-import styles from './componentStyles/colorBar.module.css';
+import styles from './colorBarStyles/colorBar.module.css';
 
 const ColorBar = (props) => {
   const range = props.end - props.start;

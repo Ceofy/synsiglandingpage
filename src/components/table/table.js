@@ -1,32 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { MDBDataTable } from 'mdbreact';
 //import { MDBDataTableV5 } from 'mdbreact';
 
-import styles from './componentStyles/table.module.css';
-import './componentStyles/tableStyles.css';
+import styles from './tableStyles/table.module.css';
+import './tableStyles/tableStyles.css';
 
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 
-import { readTableData } from '../utils/readTableData';
+import { readTableData } from '../../utils/readTableData';
 
 const Table = (props) => {
-  const data = readTableData(props.data);
-
-  //Add click event
-  if (props.clickEvent) {
-    for (let i = 0; i < data.rows.length; i++) {
-      data.rows[i].clickEvent = () => {
-        props.clickEvent(data.rows[i]['Gene']);
-      };
-    }
-  }
-
-  const setSort = (value) => {
-    props.setSortOrder(value);
-  };
+  const data = readTableData(props.data, props.clickEvent);
 
   return (
     <div className={styles.tableContainer}>
@@ -36,7 +23,6 @@ const Table = (props) => {
           data={data}
           bordered
           hover
-          //order={[props.sortOrder.column, props.sortOrder.direction]}
           order={['Gene', 'asc']}
           responsive
           striped
@@ -45,10 +31,13 @@ const Table = (props) => {
           small
           entries={10}
           autoWidth
+          /*
           onSort={(value) => {
-            setSort(value);
-            //console.log(value);
+            props.setSortOrder(value);
+            console.log(value);
           }}
+          order={[props.sortOrder.column, props.sortOrder.direction]}
+          */
         />
       </span>
     </div>

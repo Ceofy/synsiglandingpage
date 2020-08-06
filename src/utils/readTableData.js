@@ -1,4 +1,4 @@
-export const readTableData = (data) => {
+export const readTableData = (data, clickEvent) => {
   const tableData = {};
 
   //Create columns
@@ -7,8 +7,13 @@ export const readTableData = (data) => {
     columns.push({
       label: keyToLabel(key),
       field: key,
-      sort: 'asc',
     });
+  }
+
+  for (let row of data) {
+    row['clickEvent'] = () => {
+      clickEvent(row['Gene']);
+    };
   }
 
   //Add rows and columns to data

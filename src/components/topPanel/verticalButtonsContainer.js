@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './componentStyles/verticalButtonsContainer.module.css';
+import styles from './topPanelStyles/verticalButtonsContainer.module.css';
 
 const VerticalButtonsContainer = ({ children }) => (
   <div className={styles.container}>{children}</div>

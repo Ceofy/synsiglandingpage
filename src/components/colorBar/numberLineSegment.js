@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from '../componentStyles/numberLineSegment.module.css';
+import styles from './colorBarStyles/numberLineSegment.module.css';
 
 const NumberLineSegment = (props) => {
   const classNames = [];

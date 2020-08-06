@@ -4,15 +4,15 @@ import SEO from '../components/seo';
 import Panel from '../components/panel';
 import LinkOut from '../components/linkOut';
 import Layout from '../components/layout';
-import TopPanel from '../components/topPanel';
-import ButtonLink from '../components/buttonLink';
+import TopPanel from '../components/topPanel/topPanel';
+import ButtonLink from '../components/topPanel/buttonLink';
 
-import VerticalTitle from '../components/verticalTitle';
-import VerticalButtonsContainer from '../components/verticalButtonsContainer';
+import VerticalTitle from '../components/topPanel/verticalTitle';
+import VerticalButtonsContainer from '../components/topPanel/verticalButtonsContainer';
 
-import Table from '../components/table';
-import Tabs from '../components/tabs';
-import QueryPanel from '../components/queryPanel';
+import Table from '../components/table/table';
+import Tabs from '../components/tabs/tabs';
+import QueryPanel from '../components/queryPanel/queryPanel';
 
 import styles from './pageStyles/index.module.css';
 
@@ -33,14 +33,11 @@ const contrastTextColor = 'black';
 
 const IndexPage = () => {
   //Handle sorting
+
   const [sortOrder, setSortOrder] = useState({
-    column: 'Gene',
+    column: 'Letter',
     direction: 'asc',
   });
-
-  useEffect(() => {
-    console.log(sortOrder);
-  }, [sortOrder]);
 
   //Handle searching
   const searchRef = useRef();
@@ -141,8 +138,10 @@ const IndexPage = () => {
         <QueryPanel
           suppTable1SynSigData={suppTable1SynSigData}
           suppTable9EnSigData={suppTable9EnSigData}
+          coreGenesData={coreGenesData}
           synSigAllFunctionTabData={table3Data}
           enSigAllFunctionTabData={table6Data}
+          coreGenesAllFunctionTabData={table9Data}
           ref={searchRef}
         />
       </Panel>
@@ -155,49 +154,19 @@ const IndexPage = () => {
           contents={[
             <Table
               data={table1Data}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            />, //clickEvent={searchQuery} />,
-            <Table
-              data={table2Data}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            />, //clickEvent={searchQuery} />,
-            <Table
-              data={table3Data}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            />, //clickEvent={searchQuery} />,
-            <Table
-              data={table4Data}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            />, //clickEvent={searchQuery} />,
-            <Table
-              data={table5Data}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            />, //clickEvent={searchQuery} />,
-            <Table
-              data={table6Data}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            />, //clickEvent={searchQuery} />,
-            <Table
-              data={table7Data}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            />, //clickEvent={searchQuery} />,
-            <Table
-              data={table8Data}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            />, //clickEvent={searchQuery} />,
-            <Table
-              data={table9Data}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            />, //clickEvent={searchQuery} />,
+              clickEvent={searchQuery}
+              //sortOrder={sortOrder}
+              //setSortOrder={setSortOrder}
+            />,
+            <Table data={table2Data} clickEvent={searchQuery} />,
+
+            <Table data={table3Data} clickEvent={searchQuery} />,
+            <Table data={table4Data} clickEvent={searchQuery} />,
+            <Table data={table5Data} clickEvent={searchQuery} />,
+            <Table data={table6Data} clickEvent={searchQuery} />,
+            <Table data={table7Data} clickEvent={searchQuery} />,
+            <Table data={table8Data} clickEvent={searchQuery} />,
+            <Table data={table9Data} clickEvent={searchQuery} />,
           ]}
           minorTabs={[
             'Prediction of SynSig Genes',

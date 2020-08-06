@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './componentStyles/queryForm.module.css';
+import styles from './queryPanelStyles/queryForm.module.css';
 
 const QueryForm = (props) => {
   const handleSubmit = (event) => {
@@ -25,7 +25,7 @@ const QueryForm = (props) => {
             <input
               type='text'
               value={props.query}
-              placeholder='Eg. JPH3'
+              placeholder='Eg. DLG1'
               onChange={handleChange}
               className={[
                 styles.inputField,

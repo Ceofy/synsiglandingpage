@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 
-import styles from './componentStyles/tabs.module.css';
-import './componentStyles/tabsStyles.css';
+import styles from './tabsStyles/tabs.module.css';
+import './tabsStyles/tabsStyles.css';
 
 export default (props) => {
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './componentStyles/verticalTitle.module.css';
+import styles from './topPanelStyles/verticalTitle.module.css';
 
 const VerticalTitle = (props) => (
   <div className={styles.titleDiv}>

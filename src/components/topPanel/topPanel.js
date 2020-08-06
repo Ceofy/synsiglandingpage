@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './componentStyles/topPanel.module.css';
+import styles from './topPanelStyles/topPanel.module.css';
 
 const TopPanel = ({ children }) => (
   <div className={styles.background}>
