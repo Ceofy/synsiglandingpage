@@ -140,6 +140,7 @@ table.table-hover tbody tr:hover {
 
 .pagination .page-item.active .page-link {
   background-color: rgb(255, 140, 0) !important;
+  z-index: 0;
 }
 
 /* Change cursor 

@@ -21,8 +21,8 @@ const QueryResult = (props) => {
 
   return (
     <div className={styles.queryResult}>
-      <div className={styles.tableDivsContainer}>
-        {props.coreGeneValues ? (
+      {props.coreGeneValues ? (
+        <div className={styles.tableDivsContainer}>
           <div className={styles.fitTableDiv}>
             <table className={styles.fitTable}>
               <tbody className={styles.tbody}>
@@ -62,8 +62,26 @@ const QueryResult = (props) => {
               </tbody>
             </table>
           </div>
-        ) : (
-          <>
+          <div className={styles.tableDiv}>
+            <table className={styles.table}>
+              <tbody className={styles.tbody}>
+                <tr className={styles.tr}>
+                  <td className={styles.td}>
+                    <div className={styles.title}>Synapse Status:</div>
+                    <div className={styles.text}>Core synapse gene*</div>
+                    <div className={styles.asteriskText}>
+                      *Core synapse genes used for training do not have
+                      predicted scores.
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className={styles.tableDivsContainer}>
             <div className={styles.tableDiv}>
               <table className={styles.table}>
                 <tbody className={styles.tbody}>
@@ -75,7 +93,7 @@ const QueryResult = (props) => {
                         {props.suppTable1SynSigValues['Average_Score']}
                         <br />
                         Classification:{' '}
-                        {props.suppTable1SynSigValues['Classification']}
+                        {props.suppTable1SynSigValues['Classification']}*
                         <div className={styles.colorBar}>
                           <ColorBar
                             barHeight={COLOR_BAR_HEIGHT}
@@ -96,7 +114,7 @@ const QueryResult = (props) => {
                         {props.suppTable9EnSigValues['Average_Score']}
                         <br />
                         Classification:{' '}
-                        {props.suppTable9EnSigValues['Classification']}
+                        {props.suppTable9EnSigValues['Classification']}*
                         <div className={styles.colorBar}>
                           <ColorBar
                             barHeight={COLOR_BAR_HEIGHT}
@@ -163,9 +181,15 @@ const QueryResult = (props) => {
                 </tbody>
               </table>
             </div>
-          </>
-        )}
-      </div>
+          </div>
+          <div className={styles.asteriskText}>
+            *SynSig Classification is thresholded at similarity score of 4.7 to
+            the core synapse genes; EnSig classification is thresholded at 4.65.
+            Lower threshold will include more synapse genes, but will also lead
+            to more false discoveries.
+          </div>
+        </>
+      )}
       <div className={styles.tableDiv}>
         <table className={styles.bottomTable}>
           <tbody className={styles.tbody}>

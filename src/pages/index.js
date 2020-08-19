@@ -33,9 +33,8 @@ const contrastTextColor = 'black';
 
 const IndexPage = () => {
   //Handle sorting
-
   const [sortOrder, setSortOrder] = useState({
-    column: 'Letter',
+    column: 'Gene',
     direction: 'asc',
   });
 
@@ -155,18 +154,57 @@ const IndexPage = () => {
             <Table
               data={table1Data}
               clickEvent={searchQuery}
-              //sortOrder={sortOrder}
-              //setSortOrder={setSortOrder}
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
             />,
-            <Table data={table2Data} clickEvent={searchQuery} />,
-
-            <Table data={table3Data} clickEvent={searchQuery} />,
-            <Table data={table4Data} clickEvent={searchQuery} />,
-            <Table data={table5Data} clickEvent={searchQuery} />,
-            <Table data={table6Data} clickEvent={searchQuery} />,
-            <Table data={table7Data} clickEvent={searchQuery} />,
-            <Table data={table8Data} clickEvent={searchQuery} />,
-            <Table data={table9Data} clickEvent={searchQuery} />,
+            <Table
+              data={table2Data}
+              clickEvent={searchQuery}
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+            />,
+            <Table
+              data={table3Data}
+              clickEvent={searchQuery}
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+            />,
+            <Table
+              data={table4Data}
+              clickEvent={searchQuery}
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+            />,
+            <Table
+              data={table5Data}
+              clickEvent={searchQuery}
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+            />,
+            <Table
+              data={table6Data}
+              clickEvent={searchQuery}
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+            />,
+            <Table
+              data={table7Data}
+              clickEvent={searchQuery}
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+            />,
+            <Table
+              data={table8Data}
+              clickEvent={searchQuery}
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+            />,
+            <Table
+              data={table9Data}
+              clickEvent={searchQuery}
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+            />,
           ]}
           minorTabs={[
             'Prediction of SynSig Genes',

@@ -79,6 +79,15 @@
   padding-right: 1em;
 }
 
+.asteriskText {
+  font-weight: 300;
+  text-align: left;
+  font-size: 14px;
+  padding-right: none;
+  margin-top: 1em;
+  margin-bottom: 1.5em;
+}
+
 .colorBar {
   margin-right: 1em;
   margin-top: 0.2em;
