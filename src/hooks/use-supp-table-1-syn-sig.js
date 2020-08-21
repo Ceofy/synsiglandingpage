@@ -12,7 +12,7 @@ export const useSuppTable1SynSig = () => {
             Cortex
             Striatum
             Fetal
-            NGN2
+            hiPSC
             SynGO
             GO_Synapse
             SynDB

@@ -26,9 +26,6 @@ const Layout = (props) => {
 
   return (
     <>
-      <div className={styles.headerContainer}>
-        <Header siteTitle={data.site.siteMetadata.title} />
-      </div>
       <div className={styles.container}>
         <main>{props.children}</main>
         <footer style={{ backgroundColor: props.backgroundColor }}>

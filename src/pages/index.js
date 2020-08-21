@@ -73,7 +73,7 @@ const IndexPage = () => {
     'Classification',
     'Cortex',
     'Striatum',
-    'NGN2',
+    'hiPSC',
     'Fetal',
   ];
 
@@ -96,41 +96,10 @@ const IndexPage = () => {
       <TopPanel>
         <VerticalTitle title='SynSig' subtitle='Synaptic Signatures' />
         <VerticalButtonsContainer>
-          <ButtonLink
-            text='Search SynSig'
-            link='#search'
-            tooltip={false}
-            anchor
-            onClick={() => {
-              window.setTimeout(function () {
-                document.getElementById('searchBar').focus();
-              }, 0);
-            }}
-          />
-          <ButtonLink
-            text='View in GitHub'
-            link='http://www.github.com/'
-            tooltip={false}
-          />
+          <ButtonLink text='Learn More' link='#about' tooltip={false} anchor />
         </VerticalButtonsContainer>
       </TopPanel>
-      <Panel backgroundColor='white' textColor='rgba(0, 0, 0, 0.8)'>
-        <h2>SynSig</h2>
-        <p>
-          {
-            'The synapse is a complex protein-dense structure critical for proper brain functioning. The molecular composition of the synaptic network is incompletely defined, impeding our understanding of healthy and diseased neurological functions. To address this gap, we devised a machine learning system to capture core features of the synapse from their genomic, transcriptomic, and structural patterns – a “synaptic signature” – leading to the identification of novel synaptic proteins.'
-          }
-        </p>
-        <p>
-          {
-            'Manuscript in preparation: Mei et al., "Identifying Synapse Genes Using Global Molecular Signatures." In Preparation.'
-          }
-        </p>
-      </Panel>
-      <Panel
-        backgroundColor={contrastBackgroundColor}
-        textColor={contrastTextColor}
-      >
+      <Panel>
         <a id='search'>
           <h2>Search SynSig</h2>
         </a>
@@ -144,7 +113,10 @@ const IndexPage = () => {
           ref={searchRef}
         />
       </Panel>
-      <Panel>
+      <Panel
+        backgroundColor={contrastBackgroundColor}
+        textColor={contrastTextColor}
+      >
         <a id='data' className={styles.anchor}>
           <h2>SynSig Data</h2>
         </a>
@@ -224,6 +196,26 @@ const IndexPage = () => {
           setInnerIndex={setInnerIndex}
         />
       </Panel>
+      <Panel backgroundColor='white' textColor='rgba(0, 0, 0, 0.8)'>
+        <a id='about'>
+          <h2>About SynSig</h2>
+        </a>
+        <p>
+          {
+            'The synapse is a complex protein-dense structure critical for proper brain functioning. The molecular composition of the synaptic network is incompletely defined, impeding our understanding of healthy and diseased neurological functions. To address this gap, we devised a machine learning system to capture core features of the synapse from their genomic, transcriptomic, and structural patterns – a “synaptic signature” – leading to the identification of novel synaptic proteins.'
+          }
+        </p>
+        <p>
+          {
+            'Manuscript in preparation: Mei et al., "Identifying Synapse Genes Using Global Molecular Signatures." In Preparation.'
+          }
+        </p>
+        <p>
+          All code can be found on{' '}
+          <LinkOut link='http://github.com'>GitHub</LinkOut>.
+        </p>
+      </Panel>
+
       <Panel
         backgroundColor={contrastBackgroundColor}
         textColor={contrastTextColor}
@@ -354,7 +346,7 @@ const applyClasses = (data) => {
   const fields = [
     'Cortex',
     'Striatum',
-    'NGN2',
+    'hiPSC',
     'Fetal',
     'SynGO',
     'GO_Synapse',
@@ -374,6 +366,7 @@ const applyClasses = (data) => {
         );
       }
     }
+
     for (let j = 0; j < fields.length; j++) {
       if (newObject[fields[j]] === '1') {
         newObject[fields[j]] = <div className={styles.highlight}>1</div>;
@@ -381,6 +374,7 @@ const applyClasses = (data) => {
     }
     newData.push(newObject);
   }
+
   return newData;
 };
 

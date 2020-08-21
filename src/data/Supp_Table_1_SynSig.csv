@@ -1,4 +1,4 @@
-Gene,Average Score,Classification,Cortex,Striatum,NGN2,Fetal,SynGO,GO Synapse,SynDB,SynSysNet
+Gene,Average Score,Classification,Cortex,Striatum,hiPSC,Fetal,SynGO,GO Synapse,SynDB,SynSysNet
 A1CF,3.881712420549,Negative,0,0,0,0,0,0,0,0
 A2M,4.751675504363999,SynSig,0,0,0,0,0,0,0,0
 A4GALT,3.717230848387417,Negative,0,0,0,0,0,0,0,0

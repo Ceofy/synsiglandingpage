@@ -11,12 +11,14 @@
 
 .vertical {
   margin-bottom: var(--button-bottom-spacing);
+  text-decoration: none;
 }
 
 .horizontal {
   padding: 0 var(--button-side-spacing);
   flex-grow: 0;
   flex-shrink: 0;
+  text-decoration: none;
 }
 
 button {

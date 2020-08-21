@@ -1,9 +1,15 @@
 @import '../../../constants.css';
 
+:root {
+  --contrast-color: rgba(65, 182, 255, 0.25);
+  --top-bottom-padding: 1.25em;
+}
+
 .queryResult {
   background-color: white;
-  padding: 1.25em 1.75em;
-  max-width: 50em;
+  padding: var(--top-bottom-padding) 1.75em;
+  max-width: 60em;
+  border: 8px solid var(--contrast-color);
 }
 
 .tableDivsContainer {
@@ -93,4 +99,23 @@
   margin-top: 0.2em;
   max-width: 16em;
   margin-bottom: -0.7em;
+}
+
+.check {
+  color: rgb(255, 140, 0);
+}
+
+.exContainer {
+  width: 100%;
+  text-align: right;
+  height: 0;
+  position: relative;
+  top: -0.5em;
+}
+
+.ex {
+  color: var(--contrast-color);
+  margin-top: 5px;
+  margin-bottom: -5px;
+  cursor: pointer;
 }

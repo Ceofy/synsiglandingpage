@@ -143,8 +143,11 @@ table.table-hover tbody tr:hover {
   z-index: 0;
 }
 
-/* Change cursor 
-tr {
+.pagination .page-item .page-link:hover {
   cursor: pointer;
 }
-*/
+
+/* Change cursor */
+.table tr {
+  cursor: pointer;
+}

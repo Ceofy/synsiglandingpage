@@ -29,7 +29,6 @@ const QueryPanel = forwardRef((props, ref) => {
 
   //0 for no query, 1 for true, -1 for false
   const [queryIsValid, setQueryIsValid] = useState(0);
-
   const [isCoreGene, setIsCoreGene] = useState(false);
 
   const [suppTable1SynSigValues, setSuppTable1SynSigValues] = useState();
@@ -98,6 +97,12 @@ const QueryPanel = forwardRef((props, ref) => {
     setQuery(gene);
   };
 
+  const handleClose = () => {
+    setQueryIsValid(0);
+    setQuery('');
+    document.getElementById('searchBar').focus();
+  };
+
   return (
     <div className={styles.queryPanel}>
       <QueryForm
@@ -115,12 +120,14 @@ const QueryPanel = forwardRef((props, ref) => {
           <QueryResult
             coreGeneValues={coreGeneValues}
             allFunctionTabValues={allFunctionTabValues}
+            handleClose={handleClose}
           />
         ) : (
           <QueryResult
             suppTable1SynSigValues={suppTable1SynSigValues}
             suppTable9EnSigValues={suppTable9EnSigValues}
             allFunctionTabValues={allFunctionTabValues}
+            handleClose={handleClose}
           />
         )
       ) : null}

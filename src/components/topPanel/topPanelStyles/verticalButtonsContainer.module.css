@@ -5,5 +5,5 @@
   vertical-align: middle;
   margin: var(--spacing-margin-y) var(--spacing-margin-x);
   position: relative;
-  top: calc(var(--button-bottom-spacing) / 2);
+  top: var(--button-bottom-spacing);
 }

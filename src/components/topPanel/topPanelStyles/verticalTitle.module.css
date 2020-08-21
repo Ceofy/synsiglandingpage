@@ -6,7 +6,6 @@
 
 h1 {
   display: inline-block;
-  font-weight: 100;
   color: white;
   vertical-align: middle;
   text-align: center;
@@ -14,23 +13,23 @@ h1 {
 }
 
 .text {
-  font-weight: 100;
   margin: 0;
   display: block;
 }
 
 .title {
   composes: text;
-  font-size: 200px;
+  font-size: 225px;
+  font-weight: 100;
 }
 
 .subtitle {
   composes: text;
   font-size: 38px;
+  font-weight: 100;
   padding-top: 0;
   left: var(--subtitle-left);
 }
 
 .titleDiv {
-  padding-bottom: 2em;
 }

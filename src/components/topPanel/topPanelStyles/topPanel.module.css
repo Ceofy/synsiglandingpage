@@ -1,26 +1,31 @@
 @import '../../../constants.css';
 
+.root {
+  --height: 150px;
+}
+
 .container {
   background-color: rgba(3, 120, 193, 0.85);
   width: 100%;
-  min-height: 450px;
+  min-height: var(--height);
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-bottom: 2em;
 }
 
 .background {
   background-image: url(../../../images/synapse.jpg);
   background-position-y: 20%;
   background-position-x: 0;
-  min-height: 450px;
+  min-height: var(--height);
 }
 
 .contents {
   vertical-align: middle;
   text-align: center;
   display: inline-block;
-  margin: var(--spacing-margin-y) 0 var(--spacing-margin-y);
+  margin: 1em 0;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

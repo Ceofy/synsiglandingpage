@@ -1,4 +1,4 @@
-Index,Gene,Cortex,Striatum,NGN2,Fetal,SynGO,GO Synapse,SynDB,SynSysNet
+Index,Gene,Cortex,Striatum,hiPSC,Fetal,SynGO,GO Synapse,SynDB,SynSysNet
 0,GRIA1,1,0,0,1,1,1,1,1
 1,DBN1,1,1,1,1,1,1,1,1
 2,CAP2,1,0,1,1,0,1,1,1
