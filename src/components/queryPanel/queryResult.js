@@ -60,15 +60,6 @@ const QueryResult = (props) => {
                         <i className='fas fa-times'></i>
                       )}
                       <br />
-                      GO Synapse:{' '}
-                      {props.coreGeneValues['GO_Synapse'] === '1' ? (
-                        <i
-                          className={['fas fa-check', styles.check].join(' ')}
-                        ></i>
-                      ) : (
-                        <i className='fas fa-times'></i>
-                      )}
-                      <br />
                       SynDB:{' '}
                       {props.coreGeneValues['SynDB'] === '1' ? (
                         <i
@@ -161,23 +152,23 @@ const QueryResult = (props) => {
                     <td className={styles.td}>
                       <div className={styles.title}>SynSig</div>
                       <div className={styles.text}>
-                        Average Score:{' '}
-                        {parseFloat(
-                          props.suppTable1SynSigValues['Average_Score']
-                        ).toFixed(2)}
+                        Synapse Percentile:{' '}
+                        {Math.floor(
+                          parseFloat(
+                            props.suppTable1SynSigValues['Synapse_Percentile']
+                          )
+                        )}
                         <br />
-                        Classification:{' '}
-                        {props.suppTable1SynSigValues['Classification']}*
                         <div className={styles.colorBar}>
                           <ColorBar
                             barHeight={COLOR_BAR_HEIGHT}
                             lineHeight={COLOR_LINE_HEIGHT}
-                            start={2.4}
-                            mid={4.7}
-                            end={6}
+                            start={0}
+                            end={99}
+                            step={25}
                             pointerWidth={COLOR_POINTER_WIDTH}
                             pointerValue={
-                              props.suppTable1SynSigValues['Average_Score']
+                              props.suppTable1SynSigValues['Synapse_Percentile']
                             }
                           />
                         </div>
@@ -243,16 +234,6 @@ const QueryResult = (props) => {
                           <i className='fas fa-times'></i>
                         )}
                         <br />
-                        GO Synapse:{' '}
-                        {props.suppTable1SynSigValues['GO_Synapse'] === '1' ? (
-                          <i
-                            className='fas fa-check'
-                            style={{ color: 'rgb(255, 140, 0)' }}
-                          ></i>
-                        ) : (
-                          <i className='fas fa-times'></i>
-                        )}
-                        <br />
                         SynDB:{' '}
                         {props.suppTable1SynSigValues['SynDB'] === '1' ? (
                           <i
@@ -268,6 +249,16 @@ const QueryResult = (props) => {
                           <i
                             className='fas fa-check'
                             style={{ color: 'rgb(255, 140, 0)' }}
+                          ></i>
+                        ) : (
+                          <i className='fas fa-times'></i>
+                        )}
+                        <br />
+                        GO Synapse:{' '}
+                        {props.suppTable9EnSigValues['GO_Synapse'] === '1' ? (
+                          <i
+                            className='fas fa-check'
+                            style={{ color: 'rgb(255, 140, 0' }}
                           ></i>
                         ) : (
                           <i className='fas fa-times'></i>
@@ -321,7 +312,9 @@ const QueryResult = (props) => {
                   <tr className={styles.tr}>
                     <td className={styles.td} colSpan={2}>
                       <div className={styles.title}>Status</div>
-                      <div className={styles.text}>{status}</div>
+                      <div className={styles.text}>
+                        {props.suppTable1SynSigValues['Status']}
+                      </div>
                     </td>
                   </tr>
                 </tbody>
@@ -329,8 +322,7 @@ const QueryResult = (props) => {
             </div>
           </div>
           <div className={styles.asteriskText}>
-            *SynSig Classification is thresholded at similarity score of 4.7 to
-            the core synapse genes; EnSig classification is thresholded at 4.65.
+            *EnSig classification is thresholded at a similarity score of 4.65.
             Lower threshold will include more synapse genes, but will also lead
             to more false discoveries.
           </div>
@@ -413,7 +405,7 @@ const QueryResult = (props) => {
 };
 
 const findStatus = (synSigData, enSigData) => {
-  const databaseList = ['SynGO', 'GO_Synapse', 'SynDB', 'SynSysNet'];
+  const databaseList = ['SynGO', 'SynDB', 'SynSysNet'];
   let database = false;
   for (let key of databaseList) {
     if (synSigData[key] === '1') {

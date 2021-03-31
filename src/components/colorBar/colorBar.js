@@ -10,7 +10,16 @@ import styles from './colorBarStyles/colorBar.module.css';
 
 const ColorBar = (props) => {
   const range = props.end - props.start;
-  const mid = (props.mid - props.start) / range;
+  let mid;
+  let step;
+  if (props.mid != undefined) {
+    mid = (props.mid - props.start) / range;
+  }
+  if (props.step != undefined) {
+    step = props.step;
+  } else {
+    step = 1;
+  }
 
   //Number line variables
   let widthUnit;
@@ -25,20 +34,42 @@ const ColorBar = (props) => {
   }
 
   const lineWidth = widthNumber / range;
-  const intRange = Math.floor(props.end) - Math.ceil(props.start);
+  let intRange;
+  if (step == 1) {
+    intRange = Math.floor(props.end) - Math.ceil(props.start);
+  } else {
+    intRange = Math.trunc((props.end - props.start) / step);
+  }
+  console.log('intRange: ' + intRange.toString());
 
   let partialRightLine = false;
   let partialLeftLine = false;
   let rightLineWidth;
   let leftLineWidth;
-  if (props.end != Math.floor(props.end)) {
-    rightLineWidth = lineWidth * (props.end - Math.floor(props.end));
-    partialRightLine = true;
+  if (step == 1) {
+    if (props.end != Math.floor(props.end)) {
+      rightLineWidth = lineWidth * (props.end - Math.floor(props.end));
+      partialRightLine = true;
+    }
+    if (props.start != Math.ceil(props.start)) {
+      leftLineWidth = lineWidth * (Math.ceil(props.start) - props.start);
+      partialLeftLine = true;
+    }
+  } else {
+    if (props.end % step != 0) {
+      rightLineWidth = lineWidth * (props.end % step);
+      partialRightLine = true;
+    }
+    if (props.start % step != 0) {
+      leftLineWidth = lineWidth * (step - (props.start % step));
+      partialLeftLine = true;
+    }
   }
-  if (props.start != Math.ceil(props.start)) {
-    leftLineWidth = lineWidth * (Math.ceil(props.start) - props.start);
-    partialLeftLine = true;
-  }
+
+  console.log(props.start);
+  console.log(props.end);
+  console.log(partialLeftLine);
+  console.log(partialRightLine);
 
   //Build number line
   const numberLine = [];
@@ -46,6 +77,9 @@ const ColorBar = (props) => {
   let key = 0;
   let value = Math.ceil(props.start);
   if (partialLeftLine) {
+    console.log('partialLeftLine');
+    console.log(value);
+    console.log(leftLineWidth.toString() + widthUnit);
     numberLine.push(
       <NumberLineSegment
         width={leftLineWidth.toString() + widthUnit}
@@ -55,83 +89,96 @@ const ColorBar = (props) => {
       />
     );
     numbers.push(
-      <NumberSegment width={leftLineWidth.toString() + widthUnit} key={key++} />
+      <NumberSegment width={leftLineWidth.toString() + widthUnit} key={key} />
     );
+    key += step;
   }
   for (let i = 0; i < intRange - 1; i++) {
+    console.log('step: ' + i.toString());
+    console.log(value * step);
+    console.log((lineWidth * step).toString() + widthUnit);
     numberLine.push(
       <NumberLineSegment
-        width={lineWidth.toString() + widthUnit}
+        width={(lineWidth * step).toString() + widthUnit}
         height={props.lineHeight}
         leftTick={true}
         color='black'
-        key={key}
+        key={key * step}
       />
     );
     numbers.push(
       <NumberSegment
-        width={lineWidth.toString() + widthUnit}
-        value={value++}
-        key={key++}
+        width={(lineWidth * step).toString() + widthUnit}
+        value={value++ * step}
+        key={key++ * step}
       />
     );
   }
   if (partialRightLine) {
+    console.log('partialRightLine');
+    console.log(value * step);
+    console.log((lineWidth * step).toString() + widthUnit);
     numberLine.push(
       <NumberLineSegment
-        width={lineWidth.toString() + widthUnit}
+        width={(lineWidth * step).toString() + widthUnit}
         height={props.lineHeight}
         leftTick={true}
         color='black'
-        key={key}
+        key={key * step}
       />
     );
     numbers.push(
       <NumberSegment
-        width={lineWidth.toString() + widthUnit}
-        key={key++}
-        value={value++}
+        width={(lineWidth * step).toString() + widthUnit}
+        key={key++ * step}
+        value={value++ * step}
       />
     );
+    console.log(value * step);
+    console.log(rightLineWidth.toString() + widthUnit);
     numberLine.push(
       <NumberLineSegment
         width={rightLineWidth.toString() + widthUnit}
         height={props.lineHeight}
         leftTick={true}
         color='black'
-        key={key}
+        key={key * step}
       />
     );
     numbers.push(
       <NumberSegment
-        width={lineWidth.toString() + widthUnit}
-        key={key++}
-        value={value++}
+        width={(lineWidth * step).toString() + widthUnit}
+        key={key * step}
+        value={value * step}
       />
     );
   } else {
+    console.log('no partialRightLine');
+    console.log(value * step);
+    console.log((lineWidth * step).toString() + widthUnit);
     numberLine.push(
       <NumberLineSegment
-        width={lineWidth.toString() + widthUnit}
+        width={(lineWidth * step).toString() + widthUnit}
         height={props.lineHeight}
         leftTick={true}
         rightTick={true}
         color='black'
-        key={key}
+        key={key * step}
       />
     );
     numbers.push(
       <NumberSegment
-        width={lineWidth.toString() + widthUnit}
-        key={key++}
-        value={value++}
+        width={(lineWidth * step).toString() + widthUnit}
+        key={key++ * step}
+        value={value++ * step}
       />
     );
+    console.log(value * step);
     numbers.push(
       <NumberSegment
-        width={lineWidth.toString() + widthUnit}
-        key={key++}
-        value={value++}
+        width={(lineWidth * step).toString() + widthUnit}
+        key={key * step}
+        value={value * step}
       />
     );
   }
@@ -144,7 +191,7 @@ const ColorBar = (props) => {
     props.pointerWidth +
     ' / 2))';
 
-  const numberOffset = (-lineWidth / 2).toString() + widthUnit;
+  const numberOffset = (-(lineWidth * step) / 2).toString() + widthUnit;
 
   return (
     <div className={styles.colorBarDiv}>
@@ -156,11 +203,18 @@ const ColorBar = (props) => {
       <Palette
         width={props.width}
         height={props.barHeight}
-        palette={[
-          { pos: 0.0, color: '#0000ff', id: 0 },
-          { pos: mid, color: '#ffffff', id: 1 },
-          { pos: 1.0, color: '#ff0000', id: 2 },
-        ]}
+        palette={
+          props.mid != undefined
+            ? [
+                { pos: 0.0, color: '#0000ff', id: 0 },
+                { pos: mid, color: '#ffffff', id: 1 },
+                { pos: 1.0, color: '#ff0000', id: 2 },
+              ]
+            : [
+                { pos: 0.0, color: '#0000ff', id: 0 },
+                { pos: 1.0, color: '#ff0000', id: 2 },
+              ]
+        }
       />
       <div
         className={styles.container}
@@ -188,8 +242,9 @@ ColorBar.defaultProps = {
 
 ColorBar.propTypes = {
   start: PropTypes.number.isRequired,
-  mid: PropTypes.number.isRequired,
+  mid: PropTypes.number,
   end: PropTypes.number.isRequired,
+  step: PropTypes.number,
   width: PropTypes.string,
   barHeight: PropTypes.string,
   lineHeight: PropTypes.string,

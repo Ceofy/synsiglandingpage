@@ -9,12 +9,13 @@ export const useSuppTable1SynSig = () => {
             Gene
             Average_Score
             Classification
+            Status
+            Synapse_Percentile
             Cortex
             Striatum
             Fetal
             hiPSC
             SynGO
-            GO_Synapse
             SynDB
             SynSysNet
           }
