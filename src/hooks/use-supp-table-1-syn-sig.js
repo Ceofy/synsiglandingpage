@@ -7,9 +7,7 @@ export const useSuppTable1SynSig = () => {
         allSuppTable1SynSigCsv {
           nodes {
             Gene
-            Average_Score
-            Classification
-            Status
+            Synapse_Status
             Synapse_Percentile
             Cortex
             Striatum

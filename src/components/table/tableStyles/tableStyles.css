@@ -75,14 +75,13 @@ label {
 }
 
 .tableTabs > div:first-of-type th:nth-child(2),
-.tableTabs > div:nth-of-type(2) th:nth-child(2) {
-  min-width: 169px;
-}
-
+.tableTabs > div:first-of-type th:nth-child(3),
 .tableTabs > div:first-of-type th:nth-child(4),
 .tableTabs > div:first-of-type th:nth-child(5),
 .tableTabs > div:first-of-type th:nth-child(6),
 .tableTabs > div:first-of-type th:nth-child(7),
+.tableTabs > div:nth-of-type(2) th:nth-child(2),
+.tableTabs > div:nth-of-type(2) th:nth-child(3),
 .tableTabs > div:nth-of-type(2) th:nth-child(4),
 .tableTabs > div:nth-of-type(2) th:nth-child(5),
 .tableTabs > div:nth-of-type(2) th:nth-child(6),
@@ -118,12 +117,8 @@ table.table-hover tbody tr:hover {
 /* Text align */
 
 .tableTabs th:first-child,
-.tableTabs > div:first-of-type th:nth-child(2),
-.tableTabs > div:nth-of-type(2) th:nth-child(2),
 .tableTabs > div:nth-of-type(3) th:nth-child(7),
 .tableTabs td:first-child,
-.tableTabs > div:first-of-type td:nth-child(2),
-.tableTabs > div:nth-of-type(2) td:nth-child(2),
 .tableTabs > div:nth-of-type(3) td:nth-child(7) {
   text-align: left;
 }

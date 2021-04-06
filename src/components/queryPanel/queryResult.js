@@ -8,26 +8,18 @@ import styles from './queryPanelStyles/queryResult.module.css';
 
 const QueryResult = (props) => {
   const [gene, setGene] = useState();
-  const [status, setStatus] = useState('');
 
   const COLOR_BAR_HEIGHT = '8px';
   const COLOR_LINE_HEIGHT = '4px';
   const COLOR_POINTER_WIDTH = '10px';
 
   useEffect(() => {
-    if (props.suppTable1SynSigValues !== undefined) {
-      setStatus(
-        findStatus(props.suppTable1SynSigValues, props.suppTable9EnSigValues)
-      );
-    }
-
     if (props.coreGeneValues) {
       setGene(props.coreGeneValues['Gene']);
     } else {
       setGene(props.suppTable1SynSigValues['Gene']);
     }
-    console.log(status);
-  }, []);
+  }, [props.coreGeneValues, props.suppTable1SynSigValues]);
 
   return (
     <div className={styles.queryResult}>
@@ -174,26 +166,9 @@ const QueryResult = (props) => {
                         </div>
                       </div>
                       <div className={styles.text}>
-                        <div className={styles.title}>EnSig</div>
-                        Average Score:{' '}
-                        {parseFloat(
-                          props.suppTable9EnSigValues['Average_Score']
-                        ).toFixed(2)}
-                        <br />
-                        Classification:{' '}
-                        {props.suppTable9EnSigValues['Classification']}*
-                        <div className={styles.colorBar}>
-                          <ColorBar
-                            barHeight={COLOR_BAR_HEIGHT}
-                            lineHeight={COLOR_LINE_HEIGHT}
-                            start={2.4}
-                            mid={4.65}
-                            end={6}
-                            pointerWidth={COLOR_POINTER_WIDTH}
-                            pointerValue={
-                              props.suppTable9EnSigValues['Average_Score']
-                            }
-                          />
+                        <div className={styles.title}>Status</div>
+                        <div className={styles.text}>
+                          {props.suppTable1SynSigValues['Status']}
                         </div>
                       </div>
                     </td>
@@ -253,16 +228,6 @@ const QueryResult = (props) => {
                         ) : (
                           <i className='fas fa-times'></i>
                         )}
-                        <br />
-                        GO Synapse:{' '}
-                        {props.suppTable9EnSigValues['GO_Synapse'] === '1' ? (
-                          <i
-                            className='fas fa-check'
-                            style={{ color: 'rgb(255, 140, 0' }}
-                          ></i>
-                        ) : (
-                          <i className='fas fa-times'></i>
-                        )}
                       </div>
                     </td>
                     <td className={styles.noWrapTd}>
@@ -309,22 +274,9 @@ const QueryResult = (props) => {
                       </div>
                     </td>
                   </tr>
-                  <tr className={styles.tr}>
-                    <td className={styles.td} colSpan={2}>
-                      <div className={styles.title}>Status</div>
-                      <div className={styles.text}>
-                        {props.suppTable1SynSigValues['Status']}
-                      </div>
-                    </td>
-                  </tr>
                 </tbody>
               </table>
             </div>
-          </div>
-          <div className={styles.asteriskText}>
-            *EnSig classification is thresholded at a similarity score of 4.65.
-            Lower threshold will include more synapse genes, but will also lead
-            to more false discoveries.
           </div>
         </>
       )}
@@ -404,36 +356,8 @@ const QueryResult = (props) => {
   );
 };
 
-const findStatus = (synSigData, enSigData) => {
-  const databaseList = ['SynGO', 'SynDB', 'SynSysNet'];
-  let database = false;
-  for (let key of databaseList) {
-    if (synSigData[key] === '1') {
-      return 'Known synapse gene';
-    }
-  }
-
-  const experimentList = ['Cortex', 'Striatum', 'hiPSC', 'Fetal'];
-  let experiment = false;
-  for (let key of experimentList) {
-    if (synSigData[key] === '1') {
-      return 'Novel synapse gene';
-    }
-  }
-
-  if (
-    synSigData['Classification'] === 'SynSig' ||
-    enSigData['Classification'] === 'EnSig'
-  ) {
-    return 'Predicted synapse gene';
-  }
-
-  return 'Not a synapse gene';
-};
-
 QueryResult.propTypes = {
   suppTable1SynSigValues: PropTypes.object,
-  suppTable9EnSigValues: PropTypes.object,
   coreGeneValues: PropTypes.object,
   allFunctionTabValues: PropTypes.object,
   handleClose: PropTypes.func,

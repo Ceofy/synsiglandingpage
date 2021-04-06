@@ -55,13 +55,11 @@ const IndexPage = () => {
 
   //Process queries
   const suppTable1SynSigClassData = applyClasses(suppTable1SynSigData);
-  const suppTable9EnSigClassData = applyClasses(suppTable9EnSigData);
   const coreGenesClassData = applyClasses(coreGenesData);
 
   const fieldsList1 = [
     'Gene',
-    'Average_Score',
-    'Classification',
+    'Synapse_Percentile',
     'SynGO',
     'GO_Synapse',
     'SynDB',
@@ -69,8 +67,7 @@ const IndexPage = () => {
   ];
   const fieldsList2 = [
     'Gene',
-    'Average_Score',
-    'Classification',
+    'Synapse_Percentile',
     'Cortex',
     'Striatum',
     'hiPSC',
@@ -79,9 +76,6 @@ const IndexPage = () => {
 
   const table1Data = extract(suppTable1SynSigClassData, fieldsList1);
   const table2Data = extract(suppTable1SynSigClassData, fieldsList2);
-
-  const table4Data = extract(suppTable9EnSigClassData, fieldsList1);
-  const table5Data = extract(suppTable9EnSigClassData, fieldsList2);
 
   const table7Data = extract(coreGenesClassData, fieldsList1);
   const table8Data = extract(coreGenesClassData, fieldsList2);
@@ -121,7 +115,7 @@ const IndexPage = () => {
           <h2>SynSig Data</h2>
         </a>
         <Tabs
-          majorTabs={['SynSig', 'EnSig', 'Core Synapse Genes']}
+          majorTabs={['SynSig', 'Core Synapse Genes']}
           contents={[
             <Table
               data={table1Data}
@@ -137,24 +131,6 @@ const IndexPage = () => {
             />,
             <Table
               data={table3Data}
-              clickEvent={searchQuery}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            />,
-            <Table
-              data={table4Data}
-              clickEvent={searchQuery}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            />,
-            <Table
-              data={table5Data}
-              clickEvent={searchQuery}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            />,
-            <Table
-              data={table6Data}
               clickEvent={searchQuery}
               sortOrder={sortOrder}
               setSortOrder={setSortOrder}
@@ -182,14 +158,11 @@ const IndexPage = () => {
             'Prediction of SynSig Genes',
             'Experimental Validation of SynSig Genes',
             'Functional Analysis of SynSig Genes',
-            'Prediction of EnSig Genes',
-            'Experimental Validation of EnSig Genes',
-            'Functional Analysis of EnSig Genes',
             'Database Validation of Core Synapse Genes',
             'Experimental Validation of Core Synapse Genes',
             'Functional Analysis of Core Synapse Genes',
           ]}
-          tabDistribution={[0, 3, 6]}
+          tabDistribution={[0, 3]}
           outerIndex={outerIndex}
           innerIndex={innerIndex}
           setOuterIndex={setOuterIndex}
@@ -226,7 +199,7 @@ const IndexPage = () => {
           <a
             href='#data'
             onClick={() => {
-              setOuterIndex(2);
+              setOuterIndex(1);
               setInnerIndex(0);
             }}
             className={styles.smallA}
@@ -235,8 +208,7 @@ const IndexPage = () => {
           </a>
         </h3>
         <p>
-          Canonical synapse genes used for training to predict SynSig and EnSig
-          genes.
+          Canonical synapse genes used for training to predict SynSig genes.
         </p>
 
         <h3>
@@ -264,23 +236,6 @@ const IndexPage = () => {
           <a
             href='#data'
             onClick={() => {
-              setOuterIndex(1);
-              setInnerIndex(0);
-            }}
-            className={styles.smallA}
-          >
-            Prediction of EnSig genes:
-          </a>
-        </h3>
-        <p>
-          Synapse genes predicted using synaptic signatures outside of the
-          brain.
-        </p>
-
-        <h3>
-          <a
-            href='#data'
-            onClick={() => {
               setOuterIndex(0);
               setInnerIndex(1);
             }}
@@ -290,9 +245,9 @@ const IndexPage = () => {
           </a>
         </h3>
         <p>
-          Synapse proteomics screens validate SynSig and EnSig genes. Binary
-          values indicate either "1" for detected or "0" for not detected in
-          each screen.
+          Synapse proteomics screens validate SynSig genes. Binary values
+          indicate either "1" for detected or "0" for not detected in each
+          screen.
         </p>
 
         <h3>
@@ -356,17 +311,6 @@ const applyClasses = (data) => {
 
   for (let i = 0; i < data.length; i++) {
     const newObject = JSON.parse(JSON.stringify(data[i]));
-    if ('Classification' in newObject) {
-      if (
-        newObject.Classification === 'SynSig' ||
-        newObject.Classification === 'EnSig'
-      ) {
-        newObject.Classification = (
-          <div className={styles.highlight}>{newObject.Classification}</div>
-        );
-      }
-    }
-
     for (let j = 0; j < fields.length; j++) {
       if (newObject[fields[j]] === '1') {
         newObject[fields[j]] = <div className={styles.highlight}>1</div>;
