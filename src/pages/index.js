@@ -10,8 +10,6 @@ import ButtonLink from '../components/topPanel/buttonLink';
 import VerticalTitle from '../components/topPanel/verticalTitle';
 import VerticalButtonsContainer from '../components/topPanel/verticalButtonsContainer';
 
-import Table from '../components/table/table';
-import Tabs from '../components/tabs/tabs';
 import QueryPanel from '../components/queryPanel/queryPanel';
 
 import styles from './pageStyles/index.module.css';
@@ -20,6 +18,7 @@ import ucsd from '../images/ucsd.png';
 import usc from '../images/usc.png';
 import mit from '../images/mit.png';
 import pnnl from '../images/pnnl.png';
+import mcgill from '../images/mcgill.png';
 
 import { useSuppTable1SynSig } from '../hooks/use-supp-table-1-syn-sig';
 import { useSynSigAllFunctionTab } from '../hooks/use-syn-sig-all-function-tab';
@@ -153,6 +152,11 @@ const IndexPage = () => {
           </LinkOut>
           <LinkOut link='https://www.mit.edu/'>
             <img src={mit} alt='MIT Logo' />
+          </LinkOut>
+        </div>
+        <div className={styles.logosContainer}>
+          <LinkOut link='https://www.mcgill.ca/'>
+            <img src={mcgill} alt='McGill University Logo'></img>
           </LinkOut>
         </div>
       </Panel>
