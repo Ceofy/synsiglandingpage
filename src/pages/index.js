@@ -20,10 +20,10 @@ import ucsd from '../images/ucsd.png';
 import usc from '../images/usc.png';
 import mit from '../images/mit.png';
 import pnnl from '../images/pnnl.png';
+import mcgill from '../images/mcgill.png';
 
 import { useSuppTable1SynSig } from '../hooks/use-supp-table-1-syn-sig';
 import { useSynSigAllFunctionTab } from '../hooks/use-syn-sig-all-function-tab';
-import { useSuppTable9EnSig } from '../hooks/use-supp-table-9-en-sig';
 import { useEnSigAllFunctionTab } from '../hooks/use-en-sig-all-function-tab';
 import { useCoreGenesWebsiteVal } from '../hooks/use-core-genes-website-val';
 import { useCoreAllFunctionTab } from '../hooks/use-core-all-function-tab';
@@ -48,14 +48,12 @@ const IndexPage = () => {
   //Make queries
   const suppTable1SynSigData = useSuppTable1SynSig();
   const table3Data = useSynSigAllFunctionTab();
-  const suppTable9EnSigData = useSuppTable9EnSig();
   const table6Data = useEnSigAllFunctionTab();
   const coreGenesData = useCoreGenesWebsiteVal();
   const table9Data = useCoreAllFunctionTab();
 
   //Process queries
   const suppTable1SynSigClassData = applyClasses(suppTable1SynSigData);
-  const suppTable9EnSigClassData = applyClasses(suppTable9EnSigData);
   const coreGenesClassData = applyClasses(coreGenesData);
 
   const fieldsList1 = [
@@ -63,7 +61,6 @@ const IndexPage = () => {
     'Average_Score',
     'Classification',
     'SynGO',
-    'GO_Synapse',
     'SynDB',
     'SynSysNet',
   ];
@@ -79,9 +76,6 @@ const IndexPage = () => {
 
   const table1Data = extract(suppTable1SynSigClassData, fieldsList1);
   const table2Data = extract(suppTable1SynSigClassData, fieldsList2);
-
-  const table4Data = extract(suppTable9EnSigClassData, fieldsList1);
-  const table5Data = extract(suppTable9EnSigClassData, fieldsList2);
 
   const table7Data = extract(coreGenesClassData, fieldsList1);
   const table8Data = extract(coreGenesClassData, fieldsList2);
@@ -105,7 +99,6 @@ const IndexPage = () => {
         </a>
         <QueryPanel
           suppTable1SynSigData={suppTable1SynSigData}
-          suppTable9EnSigData={suppTable9EnSigData}
           coreGenesData={coreGenesData}
           synSigAllFunctionTabData={table3Data}
           enSigAllFunctionTabData={table6Data}
@@ -117,86 +110,6 @@ const IndexPage = () => {
         backgroundColor={contrastBackgroundColor}
         textColor={contrastTextColor}
       >
-        <a id='data' className={styles.anchor}>
-          <h2>SynSig Data</h2>
-        </a>
-        <Tabs
-          majorTabs={['SynSig', 'EnSig', 'Core Synapse Genes']}
-          contents={[
-            <Table
-              data={table1Data}
-              clickEvent={searchQuery}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            />,
-            <Table
-              data={table2Data}
-              clickEvent={searchQuery}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            />,
-            <Table
-              data={table3Data}
-              clickEvent={searchQuery}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            />,
-            <Table
-              data={table4Data}
-              clickEvent={searchQuery}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            />,
-            <Table
-              data={table5Data}
-              clickEvent={searchQuery}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            />,
-            <Table
-              data={table6Data}
-              clickEvent={searchQuery}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            />,
-            <Table
-              data={table7Data}
-              clickEvent={searchQuery}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            />,
-            <Table
-              data={table8Data}
-              clickEvent={searchQuery}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            />,
-            <Table
-              data={table9Data}
-              clickEvent={searchQuery}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-            />,
-          ]}
-          minorTabs={[
-            'Prediction of SynSig Genes',
-            'Experimental Validation of SynSig Genes',
-            'Functional Analysis of SynSig Genes',
-            'Prediction of EnSig Genes',
-            'Experimental Validation of EnSig Genes',
-            'Functional Analysis of EnSig Genes',
-            'Database Validation of Core Synapse Genes',
-            'Experimental Validation of Core Synapse Genes',
-            'Functional Analysis of Core Synapse Genes',
-          ]}
-          tabDistribution={[0, 3, 6]}
-          outerIndex={outerIndex}
-          innerIndex={innerIndex}
-          setOuterIndex={setOuterIndex}
-          setInnerIndex={setInnerIndex}
-        />
-      </Panel>
-      <Panel backgroundColor='white' textColor='rgba(0, 0, 0, 0.8)'>
         <a id='about'>
           <h2>About SynSig</h2>
         </a>
@@ -214,100 +127,6 @@ const IndexPage = () => {
           All code can be found on{' '}
           <LinkOut link='http://github.com'>GitHub</LinkOut>.
         </p>
-      </Panel>
-
-      <Panel
-        backgroundColor={contrastBackgroundColor}
-        textColor={contrastTextColor}
-      >
-        <h2>SynSig Data Legend</h2>
-
-        <h3>
-          <a
-            href='#data'
-            onClick={() => {
-              setOuterIndex(2);
-              setInnerIndex(0);
-            }}
-            className={styles.smallA}
-          >
-            Core synapse genes:
-          </a>
-        </h3>
-        <p>
-          Canonical synapse genes used for training to predict SynSig and EnSig
-          genes.
-        </p>
-
-        <h3>
-          <a
-            href='#data'
-            onClick={() => {
-              setOuterIndex(0);
-              setInnerIndex(0);
-            }}
-            className={styles.smallA}
-          >
-            Prediction of SynSig genes:
-          </a>
-        </h3>
-        <p>
-          SynSig contains synapse genes predicted using synaptic signatures in
-          multi-omics data. The "Average Score" shows the computed ranking of
-          protein-coding genes, classifying each gene as either SynSig (likely
-          to be synapse) or Negative in "Classification." Binary values in
-          SynGO, GO Synapse, SynSysNet, and SynaptomeDB indicate synapse
-          database validation of prediction.
-        </p>
-
-        <h3>
-          <a
-            href='#data'
-            onClick={() => {
-              setOuterIndex(1);
-              setInnerIndex(0);
-            }}
-            className={styles.smallA}
-          >
-            Prediction of EnSig genes:
-          </a>
-        </h3>
-        <p>
-          Synapse genes predicted using synaptic signatures outside of the
-          brain.
-        </p>
-
-        <h3>
-          <a
-            href='#data'
-            onClick={() => {
-              setOuterIndex(0);
-              setInnerIndex(1);
-            }}
-            className={styles.smallA}
-          >
-            Experimental Validation:
-          </a>
-        </h3>
-        <p>
-          Synapse proteomics screens validate SynSig and EnSig genes. Binary
-          values indicate either "1" for detected or "0" for not detected in
-          each screen.
-        </p>
-
-        <h3>
-          <a
-            href='#data'
-            onClick={() => {
-              setOuterIndex(0);
-              setInnerIndex(2);
-            }}
-            className={styles.smallA}
-          >
-            Functional Analysis:
-          </a>
-        </h3>
-        <p>Biological function annotation of each synapse candidate.</p>
       </Panel>
       <Panel>
         <h2>Collaborators</h2>
@@ -335,6 +154,11 @@ const IndexPage = () => {
             <img src={mit} alt='MIT Logo' />
           </LinkOut>
         </div>
+        <div className={styles.logosContainer}>
+          <LinkOut link='https://www.mcgill.ca/'>
+            <img src={mcgill} alt='McGill University Logo' />
+          </LinkOut>
+        </div>
       </Panel>
     </Layout>
   );
@@ -349,7 +173,6 @@ const applyClasses = (data) => {
     'hiPSC',
     'Fetal',
     'SynGO',
-    'GO_Synapse',
     'SynDB',
     'SynSysNet',
   ];

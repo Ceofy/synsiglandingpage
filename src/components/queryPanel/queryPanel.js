@@ -12,7 +12,6 @@ import QueryResult from './queryResult';
 import styles from './queryPanelStyles/queryPanel.module.css';
 
 let suppTable1SynSigDict;
-let suppTable9EnSigDict;
 let coreGenesDict;
 let synSigAllFunctionTabDict;
 let enSigAllFunctionTabDict;
@@ -32,14 +31,12 @@ const QueryPanel = forwardRef((props, ref) => {
   const [isCoreGene, setIsCoreGene] = useState(false);
 
   const [suppTable1SynSigValues, setSuppTable1SynSigValues] = useState();
-  const [suppTable9EnSigValues, setSuppTable9EnSigValues] = useState();
   const [coreGeneValues, setCoreGeneValues] = useState();
   const [allFunctionTabValues, setAllFunctionTabValues] = useState();
 
   //Get data
   useMountEffect(() => {
     suppTable1SynSigDict = listToDict(props.suppTable1SynSigData, 'Gene');
-    suppTable9EnSigDict = listToDict(props.suppTable9EnSigData, 'Gene');
     coreGenesDict = listToDict(props.coreGenesData, 'Gene');
     synSigAllFunctionTabDict = listToDict(
       props.synSigAllFunctionTabData,
@@ -80,7 +77,6 @@ const QueryPanel = forwardRef((props, ref) => {
     if (gene in suppTable1SynSigDict) {
       setIsCoreGene(false);
       setSuppTable1SynSigValues(suppTable1SynSigDict[gene]);
-      setSuppTable9EnSigValues(suppTable9EnSigDict[gene]);
 
       if (gene in synSigAllFunctionTabDict) {
         setAllFunctionTabValues(synSigAllFunctionTabDict[gene]);
@@ -125,7 +121,6 @@ const QueryPanel = forwardRef((props, ref) => {
         ) : (
           <QueryResult
             suppTable1SynSigValues={suppTable1SynSigValues}
-            suppTable9EnSigValues={suppTable9EnSigValues}
             allFunctionTabValues={allFunctionTabValues}
             handleClose={handleClose}
           />
@@ -149,7 +144,6 @@ const listToDict = (list, key) => {
 
 QueryPanel.propTypes = {
   suppTable1SynSigData: PropTypes.array,
-  suppTable9EnSigData: PropTypes.array,
   coreGenesData: PropTypes.array,
   synSigAllFunctionTabData: PropTypes.array,
   enSigAllFunctionTabData: PropTypes.array,

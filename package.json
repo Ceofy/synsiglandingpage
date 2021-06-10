@@ -20,7 +20,6 @@
     "gatsby-transformer-remark": "^2.8.6",
     "gatsby-transformer-sharp": "^2.5.1",
     "mdbreact": "^4.27.0",
-    "palette": "github:iurii-kyrylenko/react-gradient",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

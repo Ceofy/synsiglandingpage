@@ -25,7 +25,7 @@ const QueryForm = (props) => {
             <input
               type='text'
               value={props.query}
-              placeholder='Eg. DLG1'
+              placeholder='Eg. DLG2'
               onChange={handleChange}
               className={[
                 styles.inputField,

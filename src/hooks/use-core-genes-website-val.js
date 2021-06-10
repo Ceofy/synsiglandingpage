@@ -12,7 +12,6 @@ export const useCoreGenesWebsiteVal = () => {
             Fetal
             hiPSC
             SynGO
-            GO_Synapse
             SynDB
             SynSysNet
           }
