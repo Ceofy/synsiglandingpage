@@ -40,7 +40,6 @@ const ColorBar = (props) => {
   } else {
     intRange = Math.trunc((props.end - props.start) / step);
   }
-  console.log('intRange: ' + intRange.toString());
 
   let partialRightLine = false;
   let partialLeftLine = false;
@@ -66,20 +65,12 @@ const ColorBar = (props) => {
     }
   }
 
-  console.log(props.start);
-  console.log(props.end);
-  console.log(partialLeftLine);
-  console.log(partialRightLine);
-
   //Build number line
   const numberLine = [];
   const numbers = [];
   let key = 0;
   let value = Math.ceil(props.start);
   if (partialLeftLine) {
-    console.log('partialLeftLine');
-    console.log(value);
-    console.log(leftLineWidth.toString() + widthUnit);
     numberLine.push(
       <NumberLineSegment
         width={leftLineWidth.toString() + widthUnit}
@@ -94,9 +85,6 @@ const ColorBar = (props) => {
     key += step;
   }
   for (let i = 0; i < intRange - 1; i++) {
-    console.log('step: ' + i.toString());
-    console.log(value * step);
-    console.log((lineWidth * step).toString() + widthUnit);
     numberLine.push(
       <NumberLineSegment
         width={(lineWidth * step).toString() + widthUnit}
@@ -115,9 +103,6 @@ const ColorBar = (props) => {
     );
   }
   if (partialRightLine) {
-    console.log('partialRightLine');
-    console.log(value * step);
-    console.log((lineWidth * step).toString() + widthUnit);
     numberLine.push(
       <NumberLineSegment
         width={(lineWidth * step).toString() + widthUnit}
@@ -134,8 +119,6 @@ const ColorBar = (props) => {
         value={value++ * step}
       />
     );
-    console.log(value * step);
-    console.log(rightLineWidth.toString() + widthUnit);
     numberLine.push(
       <NumberLineSegment
         width={rightLineWidth.toString() + widthUnit}
@@ -153,9 +136,6 @@ const ColorBar = (props) => {
       />
     );
   } else {
-    console.log('no partialRightLine');
-    console.log(value * step);
-    console.log((lineWidth * step).toString() + widthUnit);
     numberLine.push(
       <NumberLineSegment
         width={(lineWidth * step).toString() + widthUnit}
@@ -173,7 +153,6 @@ const ColorBar = (props) => {
         value={value++ * step}
       />
     );
-    console.log(value * step);
     numbers.push(
       <NumberSegment
         width={(lineWidth * step).toString() + widthUnit}

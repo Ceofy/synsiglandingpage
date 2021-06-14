@@ -20,7 +20,7 @@ const QueryResult = (props) => {
       setGene(props.suppTable1SynSigValues['Gene']);
     }
   }, [props.coreGeneValues, props.suppTable1SynSigValues]);
-
+  console.log(props.suppTable1SynSigValues);
   return (
     <div className={styles.queryResult}>
       <div className={styles.exContainer}>
@@ -201,9 +201,11 @@ const QueryResult = (props) => {
                       <div className={styles.text}>
                         SynGO:{' '}
                         {props.suppTable1SynSigValues['SynGO'] === '1' ? (
-                          <i
+                          /*<i
                             className='fas fa-check'
                             style={{ color: 'rgb(255, 140, 0)' }}
+                          ></i>*/ <i
+                            className={['fas fa-check', styles.check].join(' ')}
                           ></i>
                         ) : (
                           <i className='fas fa-times'></i>
