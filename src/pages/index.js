@@ -39,10 +39,6 @@ const IndexPage = () => {
 
   //Handle searching
   const searchRef = useRef();
-  const searchQuery = (gene) => {
-    searchRef.current.searchQuery(gene);
-    document.getElementById('search').scrollIntoView();
-  };
 
   //Make queries
   const suppTable1SynSigData = useSuppTable1SynSig();
@@ -72,16 +68,6 @@ const IndexPage = () => {
     'hiPSC',
     'Fetal',
   ];
-
-  const table1Data = extract(suppTable1SynSigClassData, fieldsList1);
-  const table2Data = extract(suppTable1SynSigClassData, fieldsList2);
-
-  const table7Data = extract(coreGenesClassData, fieldsList1);
-  const table8Data = extract(coreGenesClassData, fieldsList2);
-
-  //Handle tabs
-  const [outerIndex, setOuterIndex] = useState(0);
-  const [innerIndex, setInnerIndex] = useState(0);
 
   return (
     <Layout>
@@ -125,7 +111,10 @@ const IndexPage = () => {
         </p>
         <p>
           All code can be found on{' '}
-          <LinkOut link='http://github.com'>GitHub</LinkOut>.
+          <LinkOut link='https://github.com/KarenYuanMei/SynSig_Updated'>
+            GitHub
+          </LinkOut>
+          .
         </p>
       </Panel>
       <Panel>
