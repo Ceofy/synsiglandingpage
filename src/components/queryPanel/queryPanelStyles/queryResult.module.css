@@ -101,8 +101,12 @@
   margin-bottom: -0.7em;
 }
 
-.check {
-  color: rgb(255, 140, 0);
+.icon {
+  margin: 0;
+  margin-left: 0.15rem;
+  height: 1rem;
+  position: relative;
+  top: 0.15rem;
 }
 
 .exContainer {
@@ -110,12 +114,12 @@
   text-align: right;
   height: 0;
   position: relative;
-  top: -0.5em;
+  top: -0.25em;
+  right: -0.5em;
 }
 
 .ex {
-  color: var(--contrast-color);
-  margin-top: 5px;
-  margin-bottom: -5px;
+  margin: 0;
+  height: 1rem;
   cursor: pointer;
 }

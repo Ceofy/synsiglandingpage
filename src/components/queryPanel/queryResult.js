@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 import ColorBar from '../colorBar/colorBar';
 import LinkOut from '../linkOut';
+import xIcon from '../../images/noun_x.svg';
+import checkIcon from '../../images/noun_check.svg';
+import blueXIcon from '../../images/noun_x_blue.svg';
 
 import styles from './queryPanelStyles/queryResult.module.css';
 
@@ -24,10 +27,11 @@ const QueryResult = (props) => {
   return (
     <div className={styles.queryResult}>
       <div className={styles.exContainer}>
-        <i
-          className={['fas fa-times', styles.ex].join(' ')}
+        <img
+          src={blueXIcon}
+          className={styles.ex}
           onClick={props.handleClose}
-        ></i>
+        />
       </div>
       {props.coreGeneValues ? (
         <div className={styles.tableDivsContainer}>
@@ -45,29 +49,23 @@ const QueryResult = (props) => {
                     <div className={styles.text}>
                       SynGO:{' '}
                       {props.coreGeneValues['SynGO'] === '1' ? (
-                        <i
-                          className={['fas fa-check', styles.check].join(' ')}
-                        ></i>
+                        <img src={checkIcon} className={styles.icon} />
                       ) : (
-                        <i className='fas fa-times'></i>
+                        <img src={xIcon} className={styles.icon} />
                       )}
                       <br />
                       SynDB:{' '}
                       {props.coreGeneValues['SynDB'] === '1' ? (
-                        <i
-                          className={['fas fa-check', styles.check].join(' ')}
-                        ></i>
+                        <img src={checkIcon} className={styles.icon} />
                       ) : (
-                        <i className='fas fa-times'></i>
+                        <img src={xIcon} className={styles.icon} />
                       )}
                       <br />
                       SynSysNet:{' '}
                       {props.coreGeneValues['SynSysNet'] === '1' ? (
-                        <i
-                          className={['fas fa-check', styles.check].join(' ')}
-                        ></i>
+                        <img src={checkIcon} className={styles.icon} />
                       ) : (
-                        <i className='fas fa-times'></i>
+                        <img src={xIcon} className={styles.icon} />
                       )}
                     </div>
                   </td>
@@ -78,38 +76,30 @@ const QueryResult = (props) => {
                     <div className={styles.text}>
                       Cortex:{' '}
                       {props.coreGeneValues['Cortex'] === '1' ? (
-                        <i
-                          className={['fas fa-check', styles.check].join(' ')}
-                        ></i>
+                        <img src={checkIcon} className={styles.icon} />
                       ) : (
-                        <i className='fas fa-times'></i>
+                        <img src={xIcon} className={styles.icon} />
                       )}
                       <br />
                       Striatum:{' '}
                       {props.coreGeneValues['Striatum'] === '1' ? (
-                        <i
-                          className={['fas fa-check', styles.check].join(' ')}
-                        ></i>
+                        <img src={checkIcon} className={styles.icon} />
                       ) : (
-                        <i className='fas fa-times'></i>
+                        <img src={xIcon} className={styles.icon} />
                       )}
                       <br />
                       hiPSC:{' '}
                       {props.coreGeneValues['hiPSC'] === '1' ? (
-                        <i
-                          className={['fas fa-check', styles.check].join(' ')}
-                        ></i>
+                        <img src={checkIcon} className={styles.icon} />
                       ) : (
-                        <i className='fas fa-times'></i>
+                        <img src={xIcon} className={styles.icon} />
                       )}
                       <br />
                       Fetal:{' '}
                       {props.coreGeneValues['Fetal'] === '1' ? (
-                        <i
-                          className={['fas fa-check', styles.check].join(' ')}
-                        ></i>
+                        <img src={checkIcon} className={styles.icon} />
                       ) : (
-                        <i className='fas fa-times'></i>
+                        <img src={xIcon} className={styles.icon} />
                       )}
                     </div>
                   </td>
@@ -201,34 +191,23 @@ const QueryResult = (props) => {
                       <div className={styles.text}>
                         SynGO:{' '}
                         {props.suppTable1SynSigValues['SynGO'] === '1' ? (
-                          /*<i
-                            className='fas fa-check'
-                            style={{ color: 'rgb(255, 140, 0)' }}
-                          ></i>*/ <i
-                            className={['fas fa-check', styles.check].join(' ')}
-                          ></i>
+                          <img src={checkIcon} className={styles.icon} />
                         ) : (
-                          <i className='fas fa-times'></i>
+                          <img src={xIcon} className={styles.icon} />
                         )}
                         <br />
                         SynDB:{' '}
                         {props.suppTable1SynSigValues['SynDB'] === '1' ? (
-                          <i
-                            className='fas fa-check'
-                            style={{ color: 'rgb(255, 140, 0)' }}
-                          ></i>
+                          <img src={checkIcon} className={styles.icon} />
                         ) : (
-                          <i className='fas fa-times'></i>
+                          <img src={xIcon} className={styles.icon} />
                         )}
                         <br />
                         SynSysNet:{' '}
                         {props.suppTable1SynSigValues['SynSysNet'] === '1' ? (
-                          <i
-                            className='fas fa-check'
-                            style={{ color: 'rgb(255, 140, 0)' }}
-                          ></i>
+                          <img src={checkIcon} className={styles.icon} />
                         ) : (
-                          <i className='fas fa-times'></i>
+                          <img src={xIcon} className={styles.icon} />
                         )}
                       </div>
                     </td>
@@ -236,42 +215,30 @@ const QueryResult = (props) => {
                       <div className={styles.text}>
                         Cortex:{' '}
                         {props.suppTable1SynSigValues['Cortex'] === '1' ? (
-                          <i
-                            className='fas fa-check'
-                            style={{ color: 'rgb(255, 140, 0)' }}
-                          ></i>
+                          <img src={checkIcon} className={styles.icon} />
                         ) : (
-                          <i className='fas fa-times'></i>
+                          <img src={xIcon} className={styles.icon} />
                         )}
                         <br />
                         Striatum:{' '}
                         {props.suppTable1SynSigValues['Striatum'] === '1' ? (
-                          <i
-                            className='fas fa-check'
-                            style={{ color: 'rgb(255, 140, 0)' }}
-                          ></i>
+                          <img src={checkIcon} className={styles.icon} />
                         ) : (
-                          <i className='fas fa-times'></i>
+                          <img src={xIcon} className={styles.icon} />
                         )}
                         <br />
                         hiPSC:{' '}
                         {props.suppTable1SynSigValues['hiPSC'] === '1' ? (
-                          <i
-                            className='fas fa-check'
-                            style={{ color: 'rgb(255, 140, 0)' }}
-                          ></i>
+                          <img src={checkIcon} className={styles.icon} />
                         ) : (
-                          <i className='fas fa-times'></i>
+                          <img src={xIcon} className={styles.icon} />
                         )}
                         <br />
                         Fetal:{' '}
                         {props.suppTable1SynSigValues['Fetal'] === '1' ? (
-                          <i
-                            className='fas fa-check'
-                            style={{ color: 'rgb(255, 140, 0)' }}
-                          ></i>
+                          <img src={checkIcon} className={styles.icon} />
                         ) : (
-                          <i className='fas fa-times'></i>
+                          <img src={xIcon} className={styles.icon} />
                         )}
                       </div>
                     </td>
