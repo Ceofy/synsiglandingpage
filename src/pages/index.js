@@ -20,54 +20,17 @@ import mit from '../images/mit.png';
 import pnnl from '../images/pnnl.png';
 import mcgill from '../images/mcgill.png';
 
-import { useSuppTable1SynSig } from '../hooks/use-supp-table-1-syn-sig';
-import { useSynSigAllFunctionTab } from '../hooks/use-syn-sig-all-function-tab';
-import { useSuppTable9EnSig } from '../hooks/use-supp-table-9-en-sig';
-import { useEnSigAllFunctionTab } from '../hooks/use-en-sig-all-function-tab';
-import { useCoreGenesWebsiteVal } from '../hooks/use-core-genes-website-val';
-import { useCoreAllFunctionTab } from '../hooks/use-core-all-function-tab';
+import { useSynsigData } from '../hooks/use-synsig-data';
 
 const contrastBackgroundColor = 'rgba(65,182,255, 0.25)';
 const contrastTextColor = 'black';
 
 const IndexPage = () => {
-  //Handle sorting
-  const [sortOrder, setSortOrder] = useState({
-    column: 'Gene',
-    direction: 'asc',
-  });
-
   //Handle searching
   const searchRef = useRef();
 
   //Make queries
-  const suppTable1SynSigData = useSuppTable1SynSig();
-  const table3Data = useSynSigAllFunctionTab();
-  const suppTable9EnSigData = useSuppTable9EnSig();
-  const table6Data = useEnSigAllFunctionTab();
-  const coreGenesData = useCoreGenesWebsiteVal();
-  const table9Data = useCoreAllFunctionTab();
-
-  //Process queries
-  const suppTable1SynSigClassData = applyClasses(suppTable1SynSigData);
-  const coreGenesClassData = applyClasses(coreGenesData);
-
-  const fieldsList1 = [
-    'Gene',
-    'Synapse_Percentile',
-    'SynGO',
-    'GO_Synapse',
-    'SynDB',
-    'SynSysNet',
-  ];
-  const fieldsList2 = [
-    'Gene',
-    'Synapse_Percentile',
-    'Cortex',
-    'Striatum',
-    'hiPSC',
-    'Fetal',
-  ];
+  const synsigData = useSynsigData();
 
   return (
     <Layout>
@@ -82,15 +45,7 @@ const IndexPage = () => {
         <a id='search'>
           <h2>Search SynSig</h2>
         </a>
-        <QueryPanel
-          suppTable1SynSigData={suppTable1SynSigData}
-          suppTable9EnSigData={suppTable9EnSigData}
-          coreGenesData={coreGenesData}
-          synSigAllFunctionTabData={table3Data}
-          enSigAllFunctionTabData={table6Data}
-          coreGenesAllFunctionTabData={table9Data}
-          ref={searchRef}
-        />
+        <QueryPanel synsigData={synsigData} ref={searchRef} />
       </Panel>
       <Panel
         backgroundColor={contrastBackgroundColor}
@@ -151,50 +106,6 @@ const IndexPage = () => {
       </Panel>
     </Layout>
   );
-};
-
-const applyClasses = (data) => {
-  const newData = [];
-
-  const fields = [
-    'Cortex',
-    'Striatum',
-    'hiPSC',
-    'Fetal',
-    'SynGO',
-    'GO_Synapse',
-    'SynDB',
-    'SynSysNet',
-  ];
-
-  for (let i = 0; i < data.length; i++) {
-    const newObject = JSON.parse(JSON.stringify(data[i]));
-    for (let j = 0; j < fields.length; j++) {
-      if (newObject[fields[j]] === '1') {
-        newObject[fields[j]] = <div className={styles.highlight}>1</div>;
-      }
-    }
-    newData.push(newObject);
-  }
-
-  return newData;
-};
-
-const extract = (list, fields) => {
-  const newList = [];
-  for (let i = 0; i < list.length; i++) {
-    newList.push(pick(list[i], fields));
-  }
-  return newList;
-};
-
-const pick = (object, fields) => {
-  return fields.reduce((newObject, field) => {
-    if (object.hasOwnProperty(field)) {
-      newObject[field] = object[field];
-    }
-    return newObject;
-  }, {});
 };
 
 export default IndexPage;

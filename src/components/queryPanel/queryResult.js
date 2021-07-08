@@ -23,7 +23,7 @@ const QueryResult = (props) => {
       setGene(props.suppTable1SynSigValues['Gene']);
     }
   }, [props.coreGeneValues, props.suppTable1SynSigValues]);
-  console.log(props.suppTable1SynSigValues);
+
   return (
     <div className={styles.queryResult}>
       <div className={styles.exContainer}>

@@ -7,16 +7,13 @@ import React, {
 import PropTypes from 'prop-types';
 
 import QueryForm from './queryForm';
-import QueryResult from './queryResult';
+import QueryResult from './queryResult2';
 
 import styles from './queryPanelStyles/queryPanel.module.css';
 
-let suppTable1SynSigDict;
-let suppTable9EnSigDict;
-let coreGenesDict;
-let synSigAllFunctionTabDict;
-let enSigAllFunctionTabDict;
-let coreGenesAllFunctionTabDict;
+import { dataFields, queryStatuses } from '../../enums/enums';
+
+let synsigDataDict;
 
 const QueryPanel = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
@@ -28,35 +25,20 @@ const QueryPanel = forwardRef((props, ref) => {
   const [query, setQuery] = useState('');
 
   //0 for no query, 1 for true, -1 for false
-  const [queryIsValid, setQueryIsValid] = useState(0);
-  const [isCoreGene, setIsCoreGene] = useState(false);
+  const [queryStatus, setQueryStatus] = useState(queryStatuses.NO_QUERY);
 
-  const [suppTable1SynSigValues, setSuppTable1SynSigValues] = useState();
-  const [suppTable9EnSigValues, setSuppTable9EnSigValues] = useState();
-  const [coreGeneValues, setCoreGeneValues] = useState();
-  const [allFunctionTabValues, setAllFunctionTabValues] = useState();
+  const [synsigDataValues, setsynsigDataValues] = useState(null);
 
   //Get data
-  useMountEffect(() => {
-    suppTable1SynSigDict = listToDict(props.suppTable1SynSigData, 'Gene');
-    suppTable9EnSigDict = listToDict(props.suppTable9EnSigData, 'Gene');
-    coreGenesDict = listToDict(props.coreGenesData, 'Gene');
-    synSigAllFunctionTabDict = listToDict(
-      props.synSigAllFunctionTabData,
-      'Gene'
-    );
-    enSigAllFunctionTabDict = listToDict(props.enSigAllFunctionTabData, 'Gene');
-    coreGenesAllFunctionTabDict = listToDict(
-      props.coreGenesAllFunctionTabData,
-      'Gene'
-    );
-  });
+  useEffect(() => {
+    synsigDataDict = listToDict(props.synsigData, dataFields.GENE);
+  }, []);
 
   //Handle query
   const handleChange = (value) => {
     setQuery(value);
-    if (queryIsValid === -1 && value.length === 0) {
-      setQueryIsValid(0);
+    if (queryStatus === queryStatuses.INVALID && value.length === 0) {
+      setQueryStatus(queryStatuses.NO_QUERY);
     }
   };
 
@@ -64,41 +46,26 @@ const QueryPanel = forwardRef((props, ref) => {
     event.preventDefault();
 
     const upperQuery = query.toUpperCase();
-    if (upperQuery in suppTable1SynSigDict || upperQuery in coreGenesDict) {
+    if (upperQuery in synsigDataDict) {
       handleSearchQuery(upperQuery);
     } else if (upperQuery.length === 0) {
-      setQueryIsValid(0);
+      setQueryStatus(queryStatuses.NO_QUERY);
       document.getElementById('searchBar').focus();
     } else {
-      setQueryIsValid(-1);
+      setQueryStatus(queryStatuses.INVALID);
       document.getElementById('searchBar').focus();
     }
   };
 
   const handleSearchQuery = (gene) => {
     //Get relevant data
-    if (gene in suppTable1SynSigDict) {
-      setIsCoreGene(false);
-      setSuppTable1SynSigValues(suppTable1SynSigDict[gene]);
-      setSuppTable9EnSigValues(suppTable9EnSigDict[gene]);
-
-      if (gene in synSigAllFunctionTabDict) {
-        setAllFunctionTabValues(synSigAllFunctionTabDict[gene]);
-      } else {
-        setAllFunctionTabValues(enSigAllFunctionTabDict[gene]);
-      }
-    } else {
-      setIsCoreGene(true);
-      setCoreGeneValues(coreGenesDict[gene]);
-      setAllFunctionTabValues(coreGenesAllFunctionTabDict[gene]);
-    }
-
-    setQueryIsValid(1);
+    setsynsigDataValues(synsigDataDict[gene]);
+    setQueryStatus(queryStatuses.VALID);
     setQuery(gene);
   };
 
   const handleClose = () => {
-    setQueryIsValid(0);
+    setQueryStatus(queryStatus.NO_QUERY);
     setQuery('');
     document.getElementById('searchBar').focus();
   };
@@ -107,37 +74,23 @@ const QueryPanel = forwardRef((props, ref) => {
     <div className={styles.queryPanel}>
       <QueryForm
         text={
-          queryIsValid >= 0
-            ? 'Enter the name of a gene to search the SynSig database:'
-            : 'Gene not found.'
+          queryStatus === queryStatuses.INVALID
+            ? 'Gene not found.'
+            : 'Enter the name of a gene to search the SynSig database:'
         }
         query={query}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
       />
-      {queryIsValid === 1 ? (
-        isCoreGene ? (
-          <QueryResult
-            coreGeneValues={coreGeneValues}
-            allFunctionTabValues={allFunctionTabValues}
-            handleClose={handleClose}
-          />
-        ) : (
-          <QueryResult
-            suppTable1SynSigValues={suppTable1SynSigValues}
-            suppTable9EnSigValues={suppTable9EnSigValues}
-            allFunctionTabValues={allFunctionTabValues}
-            handleClose={handleClose}
-          />
-        )
+      {queryStatus === queryStatuses.VALID ? (
+        <QueryResult
+          synsigDataValues={synsigDataValues}
+          handleClose={handleClose}
+        />
       ) : null}
     </div>
   );
 });
-
-const useMountEffect = (func) => {
-  useEffect(func, []);
-};
 
 const listToDict = (list, key) => {
   const dict = {};
@@ -148,12 +101,7 @@ const listToDict = (list, key) => {
 };
 
 QueryPanel.propTypes = {
-  suppTable1SynSigData: PropTypes.array,
-  suppTable9EnSigData: PropTypes.array,
-  coreGenesData: PropTypes.array,
-  synSigAllFunctionTabData: PropTypes.array,
-  enSigAllFunctionTabData: PropTypes.array,
-  coreGenesAllFunctionTabData: PropTypes.array,
+  synsigData: PropTypes.array,
 };
 
 export default QueryPanel;
