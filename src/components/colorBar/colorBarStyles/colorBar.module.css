@@ -9,4 +9,5 @@
   margin-bottom: 1px;
   display: block;
   position: relative;
+  transform: rotate(135deg);
 }

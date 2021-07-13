@@ -4,7 +4,8 @@ import Palette from './palette';
 import NumberSegment from './numberSegment';
 import NumberLineSegment from './numberLineSegment';
 
-import pointer from '../../images/pointer.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLocationArrow } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './colorBarStyles/colorBar.module.css';
 
@@ -174,11 +175,17 @@ const ColorBar = (props) => {
 
   return (
     <div className={styles.colorBarDiv}>
-      <img
+      {/*<img
         src={pointer}
         className={styles.pointer}
         style={{ width: props.pointerWidth, left: pointerOffset }}
+      />*/}
+      <FontAwesomeIcon
+        icon={faLocationArrow}
+        className={styles.pointer}
+        style={{ width: props.pointerWidth, left: pointerOffset }}
       />
+
       <Palette
         width={props.width}
         height={props.barHeight}
@@ -213,10 +220,10 @@ const ColorBar = (props) => {
 
 ColorBar.defaultProps = {
   width: '100%',
-  barHeight: '1em',
-  lineHeight: '4px',
+  barHeight: '0.5em',
+  lineHeight: '0.5em',
   fontSize: 'inherit',
-  pointerWidth: '15px',
+  pointerWidth: '0.75em',
 };
 
 ColorBar.propTypes = {

@@ -1,5 +1,6 @@
 export enum dataFields {
   GENE = 'genes',
+  GENE_SYMBOL = 'Gene_Symbol',
   AVERAGE_SCORE = 'avg_scores',
   SYNGO = 'syngo',
   SYNDB = 'syndb',
@@ -30,6 +31,7 @@ export enum dataFields {
   OTHER_PROTEIN_BINDERS = 'Other_protein_binders',
   UNKNOWN_FUNCTIONS = 'unknown_functions',
   MF_TERMS = 'MF_Terms',
+  FUNCTION_TOTAL = 'Function_Total',
 }
 
 export enum dataFieldNames {
@@ -38,7 +40,7 @@ export enum dataFieldNames {
   SYNSYSNET = 'SynSysNet',
   CORTEX = 'Adult mouse cortex',
   STRIATUM = 'Adult mouse striatum',
-  FETAL = 'Human fetal',
+  FETAL = 'Human fetal brain',
   NGN2 = 'Human iPSC',
   SYNAPSE_STATUS = 'Status',
   SYNAPSE_PERCENTILE = 'Synapse likelihood score percentile',
@@ -57,11 +59,18 @@ export enum dataFieldNames {
   OTHER_ENZYMES = 'Other enzymes',
   OTHER_PROTEIN_BINDERS = 'Other protein binders',
   UNKNOWN_FUNCTIONS = 'Unknown functions',
-  MF_TERMS = 'Known functions',
+  MF_TERMS = 'Functional descriptions',
 }
 
 export enum queryStatuses {
   VALID = 1,
   INVALID = -1,
   NO_QUERY = 0,
+}
+
+export enum experimentalValidation {
+  CORTEX = 0,
+  STRIATUM = 1,
+  NGN2 = 2,
+  FETAL = 3,
 }

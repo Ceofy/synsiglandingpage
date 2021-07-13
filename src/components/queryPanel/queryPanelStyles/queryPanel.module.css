@@ -1,12 +1,23 @@
 @import '../../../constants.css';
 
 .queryPanel {
-  margin-left: var(--side-margin);
-  margin-right: var(--side-margin);
+  /*margin-left: var(--side-margin);
+  margin-right: var(--side-margin);*/
+  max-width: 85vw;
+  margin: auto;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   text-align: center;
   justify-content: center;
   align-items: center;
+}
+
+.tableContainer {
+  margin-top: 1em;
+  max-width: calc(85vw - 4em);
+}
+
+.tabContainer {
+  margin: 0 4em;
 }

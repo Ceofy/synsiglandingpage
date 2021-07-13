@@ -1,28 +1,128 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import ColorBar from '../colorBar/colorBar';
 import LinkOut from '../linkOut';
+import ExpandPanel from './expandPanel';
+
 import xIcon from '../../images/noun_x.svg';
 import checkIcon from '../../images/noun_check.svg';
 import blueXIcon from '../../images/noun_x_blue.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretUp } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+
+import {
+  dataFields,
+  dataFieldNames,
+  experimentalValidation,
+} from '../../enums/enums';
 
 import styles from './queryPanelStyles/queryResult.module.css';
+import Table from '../table/table2';
 
 const QueryResult = (props) => {
-  const [gene, setGene] = useState();
+  const [expandPanelContents, setExpandPanelContents] = useState(null);
+  const [expandOpen, setExpandOpen] = useState(false);
+  const [arrowsUp, setArrowsUp] = useState([true, true, true, true]);
 
-  const COLOR_BAR_HEIGHT = '8px';
-  const COLOR_LINE_HEIGHT = '4px';
-  const COLOR_POINTER_WIDTH = '10px';
+  const headers = [
+    'Gene Symbol',
+    'ΣCoverage',
+    'Σ# Proteins',
+    'Σ# Unique Peptides',
+    'Σ# Peptides',
+    'Σ# PSMs',
+    'Score A2',
+    'Coverage A2',
+    '# Peptides A2',
+    '# PSM A2',
+    'Score A4',
+    'Coverage A4',
+    '# Peptides A4',
+    '# PSM A4',
+    '# AAs',
+    'MW [kDa]',
+    'calc. pI',
+  ];
 
-  useEffect(() => {
-    if (props.coreGeneValues) {
-      setGene(props.coreGeneValues['Gene']);
+  const handleArrows = (arrowIndex) => {
+    const newArrows = [true, true, true, true];
+    if (arrowsUp[arrowIndex]) {
+      newArrows[arrowIndex] = false;
+
+      //Figure out what data to submit
+      switch (arrowIndex) {
+        case 0:
+          console.log('two');
+          setExpandPanelContents(
+            <div className={styles.tableContainer} key={arrowIndex}>
+              <Table
+                data={props.table2DataValues}
+                headers={headers}
+                navigation={false}
+              />
+            </div>
+          );
+          break;
+        case 1:
+          console.log('three');
+          setExpandPanelContents(
+            <div className={styles.tableContainer} key={arrowIndex}>
+              <Table
+                data={props.table3DataValues}
+                headers={headers}
+                navigation={false}
+              />
+            </div>
+          );
+          break;
+        case 2:
+          console.log('four');
+          setExpandPanelContents(
+            <div className={styles.tableContainer} key={arrowIndex}>
+              <Table data={props.table4DataValues} navigation={false} />
+            </div>
+          );
+          break;
+        case 3:
+          console.log('five');
+          setExpandPanelContents(
+            <div className={styles.tableContainer} key={arrowIndex}>
+              <Table data={props.table5DataValues} navigation={false} />
+            </div>
+          );
+      }
+
+      setExpandOpen(true);
     } else {
-      setGene(props.suppTable1SynSigValues['Gene']);
+      setExpandOpen(false);
     }
-  }, [props.coreGeneValues, props.suppTable1SynSigValues]);
+    setArrowsUp(newArrows);
+  };
+  console.log(expandPanelContents);
+
+  const data = props.synsigDataValues;
+
+  const findStatus = () => {
+    //Positive training gene
+    if (data[dataFields.TRAINING] === 'pos') {
+      return 'Known SynGO synapse gene, used for training';
+      //Negative training gene
+    } else if (data[dataFields.TRAINING] === 'neg') {
+      return 'Known non-synapse gene, used for training';
+      //Not a synapse gene
+    } else if (data[dataFields.SYNSIG] === 'no') {
+      return 'Predicted non-synapse gene';
+    } else {
+      //Predicted to be synapse gene
+      if (data[dataFields.SYNAPSE_STATUS] === 'new') {
+        return 'Novel predicted synapse gene';
+      } else {
+        return 'Predicted synapse gene';
+      }
+    }
+  };
 
   return (
     <div className={styles.queryResult}>
@@ -33,302 +133,350 @@ const QueryResult = (props) => {
           onClick={props.handleClose}
         />
       </div>
-      {props.coreGeneValues ? (
-        <div className={styles.tableDivsContainer}>
-          <div className={styles.fitTableDiv}>
-            <table className={styles.fitTable}>
-              <tbody className={styles.tbody}>
-                <tr className={styles.tr}>
-                  <td className={styles.td} colSpan={2}>
-                    <div className={styles.title}>Validation</div>
-                  </td>
-                </tr>
-                <tr className={styles.tr}>
-                  <td className={styles.noWrapTd}>
-                    <div className={styles.subtitle}>Database Validation:</div>
-                    <div className={styles.text}>
-                      SynGO:{' '}
-                      {props.coreGeneValues['SynGO'] === '1' ? (
-                        <img src={checkIcon} className={styles.icon} />
-                      ) : (
-                        <img src={xIcon} className={styles.icon} />
-                      )}
-                      <br />
-                      SynDB:{' '}
-                      {props.coreGeneValues['SynDB'] === '1' ? (
-                        <img src={checkIcon} className={styles.icon} />
-                      ) : (
-                        <img src={xIcon} className={styles.icon} />
-                      )}
-                      <br />
-                      SynSysNet:{' '}
-                      {props.coreGeneValues['SynSysNet'] === '1' ? (
-                        <img src={checkIcon} className={styles.icon} />
-                      ) : (
-                        <img src={xIcon} className={styles.icon} />
-                      )}
+      <div className={styles.mainTitle}>{data[dataFields.GENE]}</div>
+      <div className={styles.mainText}>{capitalize(data[dataFields.NAME])}</div>
+      <div className={styles.componentsContainer}>
+        {/*Synsig and status component*/}
+        <div className={styles.componentDiv} style={{ paddingRight: '1em' }}>
+          {data[dataFields.TRAINING] === 'no' ? (
+            <>
+              <div className={styles.title}>SynSig</div>
+              <div className={styles.componentsContainer}>
+                <div className={styles.componentDiv}>
+                  <div className={styles.text}>
+                    {dataFieldNames.SYNAPSE_PERCENTILE}:{' '}
+                    {parsePercentile(data[dataFields.SYNAPSE_PERCENTILE])}
+                    <br />
+                    <div className={styles.colorBar}>
+                      <ColorBar
+                        start={0}
+                        end={99}
+                        step={25}
+                        pointerValue={parsePercentile(
+                          data[dataFields.SYNAPSE_PERCENTILE]
+                        )}
+                      />
                     </div>
-                  </td>
-                  <td className={styles.noWrapTd}>
-                    <div className={styles.subtitle}>
-                      Experimental Validation:
-                    </div>
-                    <div className={styles.text}>
-                      Cortex:{' '}
-                      {props.coreGeneValues['Cortex'] === '1' ? (
-                        <img src={checkIcon} className={styles.icon} />
-                      ) : (
-                        <img src={xIcon} className={styles.icon} />
-                      )}
-                      <br />
-                      Striatum:{' '}
-                      {props.coreGeneValues['Striatum'] === '1' ? (
-                        <img src={checkIcon} className={styles.icon} />
-                      ) : (
-                        <img src={xIcon} className={styles.icon} />
-                      )}
-                      <br />
-                      hiPSC:{' '}
-                      {props.coreGeneValues['hiPSC'] === '1' ? (
-                        <img src={checkIcon} className={styles.icon} />
-                      ) : (
-                        <img src={xIcon} className={styles.icon} />
-                      )}
-                      <br />
-                      Fetal:{' '}
-                      {props.coreGeneValues['Fetal'] === '1' ? (
-                        <img src={checkIcon} className={styles.icon} />
-                      ) : (
-                        <img src={xIcon} className={styles.icon} />
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div className={styles.tableDiv}>
-            <table className={styles.table}>
-              <tbody className={styles.tbody}>
-                <tr className={styles.tr}>
-                  <td className={styles.td}>
-                    <div className={styles.title}>Status</div>
-                    <div className={styles.text}>Core synapse gene*</div>
-                    <div className={styles.asteriskText}>
-                      *Core synapse genes used for training do not have
-                      predicted scores.
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : null}
+          <div className={styles.title}>Status</div>
+          <div className={styles.componentsContainer}>
+            <div className={styles.componentDiv}>
+              <div className={styles.text} style={{ marginBottom: 0 }}>
+                {findStatus()}
+              </div>
+            </div>
           </div>
         </div>
-      ) : (
-        <>
-          <div className={styles.tableDivsContainer}>
-            <div className={styles.tableDiv}>
-              <table className={styles.table}>
-                <tbody className={styles.tbody}>
-                  <tr className={styles.tr}>
-                    <td className={styles.td}>
-                      <div className={styles.title}>SynSig</div>
-                      <div className={styles.text}>
-                        Synapse Percentile:{' '}
-                        {Math.floor(
-                          parseFloat(
-                            props.suppTable1SynSigValues['Synapse_Percentile']
-                          )
-                        )}
-                        <br />
-                        <div className={styles.colorBar}>
-                          <ColorBar
-                            barHeight={COLOR_BAR_HEIGHT}
-                            lineHeight={COLOR_LINE_HEIGHT}
-                            start={0}
-                            end={99}
-                            step={25}
-                            pointerWidth={COLOR_POINTER_WIDTH}
-                            pointerValue={
-                              props.suppTable1SynSigValues['Synapse_Percentile']
-                            }
-                          />
-                        </div>
-                      </div>
-                      <div className={styles.text}>
-                        <div className={styles.title}>Status</div>
-                        <div className={styles.text}>
-                          {props.suppTable1SynSigValues['Status']}
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+        {/*Validation component*/}
+        <div className={styles.componentDiv}>
+          <div className={styles.title}>Validation</div>
+          <div className={styles.componentsContainer}>
+            <div className={styles.componentDiv} style={{ marginRight: '1em' }}>
+              <div className={styles.subtitle}>Database Validation</div>
+              <div className={styles.text}>
+                {dataFieldNames.SYNGO}:{' '}
+                {data[dataFields.SYNGO] === '1' ? (
+                  <img src={checkIcon} className={styles.checkIcon} />
+                ) : (
+                  <img src={xIcon} className={styles.xIcon} />
+                )}
+                <br />
+                {dataFieldNames.SYNDB}:{' '}
+                {data[dataFields.SYNDB] === '1' ? (
+                  <img src={checkIcon} className={styles.checkIcon} />
+                ) : (
+                  <img src={xIcon} className={styles.xIcon} />
+                )}
+                <br />
+                {dataFieldNames.SYNSYSNET}:{' '}
+                {data[dataFields.SYNSYSNET] === '1' ? (
+                  <img src={checkIcon} className={styles.checkIcon} />
+                ) : (
+                  <img src={xIcon} className={styles.xIcon} />
+                )}
+              </div>
             </div>
-            <div className={styles.tableDiv}>
-              <table className={styles.table}>
-                <tbody className={styles.tbody}>
-                  <tr className={styles.tr}>
-                    <td className={styles.td} colSpan={2}>
-                      <div className={styles.title}>Validation</div>
-                    </td>
-                  </tr>
-                  <tr className={styles.tr}>
-                    <td className={styles.td}>
-                      <div className={styles.subtitle}>
-                        Database Validation:
-                      </div>
-                    </td>
-                    <td className={styles.td}>
-                      <div className={styles.subtitle}>
-                        Experimental Validation:
-                      </div>
-                    </td>
-                  </tr>
-                  <tr className={styles.tr}>
-                    <td className={styles.noWrapTd}>
-                      <div className={styles.text}>
-                        SynGO:{' '}
-                        {props.suppTable1SynSigValues['SynGO'] === '1' ? (
-                          <img src={checkIcon} className={styles.icon} />
-                        ) : (
-                          <img src={xIcon} className={styles.icon} />
-                        )}
-                        <br />
-                        SynDB:{' '}
-                        {props.suppTable1SynSigValues['SynDB'] === '1' ? (
-                          <img src={checkIcon} className={styles.icon} />
-                        ) : (
-                          <img src={xIcon} className={styles.icon} />
-                        )}
-                        <br />
-                        SynSysNet:{' '}
-                        {props.suppTable1SynSigValues['SynSysNet'] === '1' ? (
-                          <img src={checkIcon} className={styles.icon} />
-                        ) : (
-                          <img src={xIcon} className={styles.icon} />
-                        )}
-                      </div>
-                    </td>
-                    <td className={styles.noWrapTd}>
-                      <div className={styles.text}>
-                        Cortex:{' '}
-                        {props.suppTable1SynSigValues['Cortex'] === '1' ? (
-                          <img src={checkIcon} className={styles.icon} />
-                        ) : (
-                          <img src={xIcon} className={styles.icon} />
-                        )}
-                        <br />
-                        Striatum:{' '}
-                        {props.suppTable1SynSigValues['Striatum'] === '1' ? (
-                          <img src={checkIcon} className={styles.icon} />
-                        ) : (
-                          <img src={xIcon} className={styles.icon} />
-                        )}
-                        <br />
-                        hiPSC:{' '}
-                        {props.suppTable1SynSigValues['hiPSC'] === '1' ? (
-                          <img src={checkIcon} className={styles.icon} />
-                        ) : (
-                          <img src={xIcon} className={styles.icon} />
-                        )}
-                        <br />
-                        Fetal:{' '}
-                        {props.suppTable1SynSigValues['Fetal'] === '1' ? (
-                          <img src={checkIcon} className={styles.icon} />
-                        ) : (
-                          <img src={xIcon} className={styles.icon} />
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <div className={styles.componentDiv}>
+              <div className={styles.subtitle}>
+                Synapse proteomics validation
+              </div>
+
+              <div
+                className={styles.text}
+                style={{ paddingRight: 0, marginBottom: 0 }}
+              >
+                {dataFieldNames.CORTEX}:{' '}
+                {data[dataFields.CORTEX] === '1' ? (
+                  <>
+                    <img src={checkIcon} className={styles.checkIcon} />
+                  </>
+                ) : (
+                  <img src={xIcon} className={styles.xIcon} />
+                )}
+                {props.table2DataValues ? (
+                  arrowsUp[experimentalValidation.CORTEX] ? (
+                    <FontAwesomeIcon
+                      icon={faCaretUp}
+                      onClick={() =>
+                        handleArrows(experimentalValidation.CORTEX)
+                      }
+                      className={styles.upArrowIcon}
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faCaretDown}
+                      onClick={() =>
+                        handleArrows(experimentalValidation.CORTEX)
+                      }
+                      className={styles.downArrowIcon}
+                    />
+                  )
+                ) : null}
+                <br />
+                {dataFieldNames.STRIATUM}:{' '}
+                {data[dataFields.STRIATUM] === '1' ? (
+                  <>
+                    <img src={checkIcon} className={styles.checkIcon} />
+                  </>
+                ) : (
+                  <img src={xIcon} className={styles.xIcon} />
+                )}
+                {props.table3DataValues ? (
+                  arrowsUp[experimentalValidation.STRIATUM] ? (
+                    <FontAwesomeIcon
+                      icon={faCaretUp}
+                      onClick={() =>
+                        handleArrows(experimentalValidation.STRIATUM)
+                      }
+                      className={styles.upArrowIcon}
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faCaretDown}
+                      onClick={() =>
+                        handleArrows(experimentalValidation.STRIATUM)
+                      }
+                      className={styles.downArrowIcon}
+                    />
+                  )
+                ) : null}
+                <br />
+                {dataFieldNames.NGN2}:{' '}
+                {data[dataFields.NGN2] === '1' ? (
+                  <>
+                    <img src={checkIcon} className={styles.checkIcon} />
+                  </>
+                ) : (
+                  <img src={xIcon} className={styles.xIcon} />
+                )}
+                {props.table4DataValues ? (
+                  arrowsUp[experimentalValidation.NGN2] ? (
+                    <FontAwesomeIcon
+                      icon={faCaretUp}
+                      onClick={() => handleArrows(experimentalValidation.NGN2)}
+                      className={styles.upArrowIcon}
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faCaretDown}
+                      onClick={() => handleArrows(experimentalValidation.NGN2)}
+                      className={styles.downArrowIcon}
+                    />
+                  )
+                ) : null}
+                <br />
+                {dataFieldNames.FETAL}:{' '}
+                {data[dataFields.FETAL] === '1' ? (
+                  <>
+                    <img src={checkIcon} className={styles.checkIcon} />
+                  </>
+                ) : (
+                  <img src={xIcon} className={styles.xIcon} />
+                )}
+                {props.table5DataValues ? (
+                  arrowsUp[experimentalValidation.FETAL] ? (
+                    <FontAwesomeIcon
+                      icon={faCaretUp}
+                      onClick={() => handleArrows(experimentalValidation.FETAL)}
+                      className={styles.upArrowIcon}
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faCaretDown}
+                      onClick={() => handleArrows(experimentalValidation.FETAL)}
+                      className={styles.downArrowIcon}
+                    />
+                  )
+                ) : null}
+              </div>
             </div>
           </div>
-        </>
-      )}
-      <div className={styles.tableDiv}>
-        <table className={styles.bottomTable}>
-          <tbody className={styles.tbody}>
-            {props.allFunctionTabValues ? (
-              <>
-                <tr className={styles.tr}>
-                  <td className={styles.td} colSpan={2}>
-                    <div className={styles.title}>
-                      Function Analysis{' '}
-                      <span>
-                        (
-                        <LinkOut
-                          link={
-                            'https://www.genecards.org/cgi-bin/carddisp.pl?gene=' +
-                            gene
-                          }
-                        >
-                          GeneCards
-                        </LinkOut>
-                        )
-                      </span>
-                    </div>
-                  </td>
-                </tr>
-                <tr className={styles.tr}>
-                  <td className={styles.noWrapTd}>
-                    <div className={styles.subtitle}>Summary:</div>
-                    Signaling: {props.allFunctionTabValues['Signaling']}
-                    <br />
-                    Transport: {props.allFunctionTabValues['Transport']}
-                    <br />
-                    Organization: {props.allFunctionTabValues['Organization']}
-                    <br />
-                    Metabolism: {props.allFunctionTabValues['Metabolism']}
-                    <br />
-                    Development: {props.allFunctionTabValues['Development']}
-                  </td>
-                  <td className={styles.td}>
-                    <div className={styles.subtitle}>Known Functions:</div>
-                    {props.allFunctionTabValues['Known_Functions']}
-                  </td>
-                </tr>
-              </>
-            ) : (
-              <>
-                <tr className={styles.tr}>
-                  <td className={styles.td}>
-                    <div className={styles.title}>
-                      Function Analysis{' '}
-                      <span>
-                        (
-                        <LinkOut
-                          link={
-                            'https://www.genecards.org/cgi-bin/carddisp.pl?gene=' +
-                            gene
-                          }
-                        >
-                          GeneCards
-                        </LinkOut>
-                        )
-                      </span>
-                    </div>
-                  </td>
-                </tr>
-                <tr className={styles.tr}>
-                  <td className={styles.td}>N/A</td>
-                </tr>
-              </>
-            )}
-          </tbody>
-        </table>
+        </div>
       </div>
+      <ExpandPanel open={expandOpen} contents={expandPanelContents} />
+      {data[dataFields.FUNCTION_TOTAL].length > 0 ||
+      data[dataFields.MF_TERMS].length > 0 ? (
+        <div className={styles.componentDiv}>
+          <div className={styles.title}>Function Analysis</div>
+          <div className={styles.componentsContainer}>
+            {data[dataFields.FUNCTION_TOTAL].length > 0 ? (
+              <div
+                className={styles.componentDiv}
+                style={{ flexGrow: 0, marginRight: '1em' }}
+              >
+                <>
+                  <div className={styles.subtitle}>Molecular functions</div>
+                  <div className={styles.text}>
+                    {data[dataFields.RECEPTOR_CHANNEL] === '1.0' ? (
+                      <>
+                        {dataFieldNames.RECEPTOR_CHANNEL}
+                        <br />
+                      </>
+                    ) : null}
+                    {data[dataFields.KINASE_PHOSPHATASE] === '1.0' ? (
+                      <>
+                        {dataFieldNames.KINASE_PHOSPHATASE}
+                        <br />
+                      </>
+                    ) : null}
+                    {data[dataFields.UBIQUITIN_E3] === '1.0' ? (
+                      <>
+                        {dataFieldNames.UBIQUITIN_E3}
+                        <br />
+                      </>
+                    ) : null}
+                    {data[dataFields.VESICLE_TRANSPORTERS] === '1.0' ? (
+                      <>
+                        {dataFieldNames.VESICLE_TRANSPORTERS}
+                        <br />
+                      </>
+                    ) : null}
+                    {data[dataFields.GTP_ATP_REGULATORS] === '1.0' ? (
+                      <>
+                        {dataFieldNames.GTP_ATP_REGULATORS}
+                        <br />
+                      </>
+                    ) : null}
+                    {data[dataFields.NUCLEIC_ACID_BINDING] === '1.0' ? (
+                      <>
+                        {dataFieldNames.NUCLEIC_ACID_BINDING}
+                        <br />
+                      </>
+                    ) : null}
+                    {data[dataFields.TRANSLATION] === '1.0' ? (
+                      <>
+                        {dataFieldNames.TRANSLATION}
+                        <br />
+                      </>
+                    ) : null}
+                    {data[dataFields.MEMBRANE_CELL_ADHESION] === '1.0' ? (
+                      <>
+                        {dataFieldNames.MEMBRANE_CELL_ADHESION}
+                        <br />
+                      </>
+                    ) : null}
+                    {data[dataFields.OTHER_REGULATORS] === '1.0' ? (
+                      <>
+                        {dataFieldNames.OTHER_REGULATORS}
+                        <br />
+                      </>
+                    ) : null}
+                    {data[dataFields.SCAFFOLDS_ADAPTORS] === '1.0' ? (
+                      <>
+                        {dataFieldNames.SCAFFOLDS_ADAPTORS}
+                        <br />
+                      </>
+                    ) : null}
+                    {data[dataFields.CYTOSKELETAL] === '1.0' ? (
+                      <>
+                        {dataFieldNames.CYTOSKELETAL}
+                        <br />
+                      </>
+                    ) : null}
+                    {data[dataFields.CALCIUM_ION_BINDING] === '1.0' ? (
+                      <>
+                        {dataFieldNames.CALCIUM_ION_BINDING}
+                        <br />
+                      </>
+                    ) : null}
+                    {data[dataFields.OTHER_ENZYMES] === '1.0' ? (
+                      <>
+                        {dataFieldNames.OTHER_ENZYMES}
+                        <br />
+                      </>
+                    ) : null}
+                    {data[dataFields.OTHER_PROTEIN_BINDERS] === '1.0' ? (
+                      <>
+                        {dataFieldNames.OTHER_PROTEIN_BINDERS}
+                        <br />
+                      </>
+                    ) : null}
+                    {data[dataFields.UNKNOWN_FUNCTIONS] === '1.0' ? (
+                      <>
+                        {dataFieldNames.UNKNOWN_FUNCTIONS}
+                        <br />
+                      </>
+                    ) : null}
+                  </div>
+                </>
+              </div>
+            ) : null}
+            {data[dataFields.MF_TERMS].length > 0 ? (
+              <div
+                className={styles.componentDiv}
+                style={{ flexShrink: 1, flexBasis: '25vw' }}
+              >
+                <div className={styles.subtitle}>{dataFieldNames.MF_TERMS}</div>
+                <div className={styles.text}>
+                  {listToText(data[dataFields.MF_TERMS])}
+                </div>
+                <div style={{ marginTop: '-0.5em' }}>
+                  <strong>
+                    <LinkOut
+                      link={
+                        'https://www.genecards.org/cgi-bin/carddisp.pl?gene=' +
+                        data[dataFields.GENE]
+                      }
+                    >
+                      GeneCards
+                    </LinkOut>
+                  </strong>
+                </div>
+              </div>
+            ) : null}
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };
 
+const capitalize = (string) => {
+  if (string.length === 0) {
+    return '';
+  }
+  return string[0].toUpperCase() + string.slice(1);
+};
+const listToText = (string) => capitalize(string.replace(/'|\[|\]/g, ''));
+
+const parsePercentile = (percentile) => {
+  const result = Math.floor(parseFloat(percentile));
+  if (result === 100) {
+    return 99;
+  }
+  return result;
+};
+
 QueryResult.propTypes = {
-  suppTable1SynSigValues: PropTypes.object,
-  coreGeneValues: PropTypes.object,
-  allFunctionTabValues: PropTypes.object,
+  synsigDataValues: PropTypes.object,
+  table2Values: PropTypes.array,
+  table3Values: PropTypes.array,
+  table4Values: PropTypes.array,
+  table5Values: PropTypes.array,
   handleClose: PropTypes.func,
 };
 

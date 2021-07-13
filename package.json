@@ -5,6 +5,9 @@
   "version": "0.1.0",
   "author": "Kei Ono",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "acorn": "^7.3.1",
     "core-js": "^3.6.5",
     "filereader": "^0.10.3",
@@ -19,6 +22,7 @@
     "gatsby-transformer-csv": "^2.3.10",
     "gatsby-transformer-remark": "^2.8.6",
     "gatsby-transformer-sharp": "^2.5.1",
+    "joi": "^17.4.0",
     "mdbreact": "^4.27.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",

@@ -1,65 +1,28 @@
 @import '../../../constants.css';
 
 :root {
-  --contrast-color: rgba(65, 182, 255, 0.25);
   --top-bottom-padding: 1.25em;
 }
 
 .queryResult {
   background-color: white;
   padding: var(--top-bottom-padding) 1.75em;
-  max-width: 60em;
-  border: 8px solid var(--contrast-color);
-}
-
-.tableDivsContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
-}
-
-.tableDiv {
-  margin: 0.5em 0;
-}
-
-.fitTableDiv {
-  composes: tableDiv;
-  width: fit-content;
-}
-
-.fitTable {
-  margin: 0;
-  width: 100%;
-}
-
-.table {
-  composes: fitTable;
-  table-layout: fixed;
-}
-
-.bottomTable {
-  composes: table;
-  table-layout: auto;
-}
-
-.tbody {
-}
-
-.tr {
-}
-
-.td {
-  padding: 0;
-  padding-right: 3em;
-  border: 0;
+  max-width: 85vw;
+  border: 7px solid var(--contrast-color);
+  border-top: none;
   text-align: left;
-  line-height: 1.5;
-  vertical-align: top;
-  white-space: normal;
+  z-index: 0;
 }
 
-.noWrapTd {
-  composes: td;
-  white-space: nowrap;
+.componentsContainer {
+  display: flex;
+  /*grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));*/
+  flex-wrap: wrap;
+}
+
+.componentDiv {
+  margin: 0.5em 0;
+  flex-grow: 1;
 }
 
 .header {
@@ -73,11 +36,18 @@
   margin-bottom: 0.5em;
 }
 
+.mainTitle {
+  composes: title;
+  font-size: 1.5em;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0;
+}
+
 .subtitle {
   color: gray;
   white-space: normal;
   margin-bottom: 0.25em;
-  text-align: left;
   font-weight: 400;
 }
 
@@ -85,12 +55,16 @@
   font-weight: 300;
   margin-bottom: 1em;
   padding-right: 1em;
-  text-align: left;
+}
+
+.mainText {
+  composes: text;
+  text-align: center;
+  padding-right: 0;
 }
 
 .asteriskText {
   font-weight: 300;
-  text-align: left;
   font-size: 14px;
   padding-right: none;
   margin-top: 1em;
@@ -98,10 +72,7 @@
 }
 
 .colorBar {
-  margin-right: 1em;
   margin-top: 0.2em;
-  max-width: 16em;
-  /*margin-bottom: -0.7em;*/
 }
 
 .icon {
@@ -109,7 +80,37 @@
   margin-left: 0.15rem;
   height: 1rem;
   position: relative;
-  top: 0.15rem;
+  /*top: 0.15rem;*/
+}
+
+.checkIcon {
+  composes: icon;
+}
+
+.xIcon {
+  composes: icon;
+  height: 0.9rem;
+}
+
+.arrowIcon {
+  composes: icon;
+  position: relative;
+  top: 0.05em;
+  cursor: pointer;
+}
+
+.downArrowIcon {
+  composes: arrowIcon;
+  color: rgb(64, 64, 64);
+}
+
+.upArrowIcon {
+  composes: arrowIcon;
+  color: rgb(128, 128, 128);
+}
+
+.arrowContainer {
+  display: inline-block;
 }
 
 .exContainer {
@@ -125,4 +126,9 @@
   margin: 0;
   height: 1rem;
   cursor: pointer;
+}
+
+.tableContainer {
+  max-width: calc(100% + 30px - 1.75em);
+  padding-top: 1em;
 }

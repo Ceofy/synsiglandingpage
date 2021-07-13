@@ -1,0 +1,17 @@
+@import '../../../constants.css';
+
+.tabList {
+  border-bottom: 8px solid var(--contrast-color);
+  margin: 0;
+}
+
+.tabName {
+  transform: perspective(5px) rotateX(-2deg);
+  transform-origin: bottom;
+  margin: 0.5em;
+  /*
+  top: 0.5em;
+  position: relative;
+  margin: 0.5em;
+  margin-bottom: 0.5em !important;*/
+}

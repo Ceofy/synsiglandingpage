@@ -68,42 +68,6 @@ label {
   text-align: left;
 }
 
-/* Define minimum column widths */
-
-.tableTabs th:first-child {
-  min-width: 111px;
-}
-
-.tableTabs > div:first-of-type th:nth-child(2),
-.tableTabs > div:first-of-type th:nth-child(3),
-.tableTabs > div:first-of-type th:nth-child(4),
-.tableTabs > div:first-of-type th:nth-child(5),
-.tableTabs > div:first-of-type th:nth-child(6),
-.tableTabs > div:first-of-type th:nth-child(7),
-.tableTabs > div:nth-of-type(2) th:nth-child(2),
-.tableTabs > div:nth-of-type(2) th:nth-child(3),
-.tableTabs > div:nth-of-type(2) th:nth-child(4),
-.tableTabs > div:nth-of-type(2) th:nth-child(5),
-.tableTabs > div:nth-of-type(2) th:nth-child(6),
-.tableTabs > div:nth-of-type(2) th:nth-child(7) {
-  min-width: 124px;
-}
-
-.outerTabs > div:nth-of-type(3) div:first-of-type th:nth-child(2),
-.outerTabs > div:nth-of-type(3) div:first-of-type th:nth-child(3),
-.outerTabs > div:nth-of-type(3) div:nth-of-type(2) th:nth-child(2),
-.outerTabs > div:nth-of-type(3) div:nth-of-type(2) th:nth-child(3) {
-  min-width: 124px;
-}
-
-.outerTabs > div:nth-of-type(3) div:nth-of-type(3) th:nth-child(2),
-.outerTabs > div:nth-of-type(3) div:nth-of-type(3) th:nth-child(3),
-.outerTabs > div:nth-of-type(3) div:nth-of-type(3) th:nth-child(4),
-.outerTabs > div:nth-of-type(3) div:nth-of-type(3) th:nth-child(5),
-.outerTabs > div:nth-of-type(3) div:nth-of-type(3) th:nth-child(6) {
-  min-width: 0;
-}
-
 /* Change table colors */
 .table-striped tbody tr:nth-of-type(odd) {
   background-color: rgba(0, 0, 0, 0.04) !important;
@@ -112,20 +76,6 @@ label {
 table.table-hover tbody tr:hover {
   background-color: rgba(0, 0, 0, 0.09) !important;
   transition: 0s !important;
-}
-
-/* Text align */
-
-.tableTabs th:first-child,
-.tableTabs > div:nth-of-type(3) th:nth-child(7),
-.tableTabs td:first-child,
-.tableTabs > div:nth-of-type(3) td:nth-child(7) {
-  text-align: left;
-}
-
-.outerTabs > div:nth-of-type(3) div:first-of-type th:nth-child(2),
-.outerTabs > div:nth-of-type(3) div:first-of-type td:nth-child(2) {
-  text-align: center;
 }
 
 /* Pagination row */
@@ -139,10 +89,5 @@ table.table-hover tbody tr:hover {
 }
 
 .pagination .page-item .page-link:hover {
-  cursor: pointer;
-}
-
-/* Change cursor */
-.table tr {
   cursor: pointer;
 }

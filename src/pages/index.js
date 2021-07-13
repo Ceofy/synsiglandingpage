@@ -26,9 +26,6 @@ const contrastBackgroundColor = 'rgba(65,182,255, 0.25)';
 const contrastTextColor = 'black';
 
 const IndexPage = () => {
-  //Handle searching
-  const searchRef = useRef();
-
   //Make queries
   const synsigData = useSynsigData();
 
@@ -45,7 +42,7 @@ const IndexPage = () => {
         <a id='search'>
           <h2>Search SynSig</h2>
         </a>
-        <QueryPanel synsigData={synsigData} ref={searchRef} />
+        <QueryPanel synsigData={synsigData} />
       </Panel>
       <Panel
         backgroundColor={contrastBackgroundColor}

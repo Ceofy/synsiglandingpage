@@ -1,0 +1,49 @@
+@import '../../../constants.css';
+
+.react-tabs__tab {
+  transform: perspective(5px) rotateX(2deg);
+  transform-origin: bottom;
+  border: 10px solid var(--contrast-color);
+  border-bottom: none;
+  padding-bottom: 0.5em;
+  bottom: -7px;
+  border-radius: 5px 5px 0 0;
+  margin: 0 -0.25em;
+  color: gray;
+}
+
+.react-tabs__tab:focus {
+  box-shadow: 0 0 5px 5px rgba(65, 182, 255, 0.25);
+  border-color: var(--contrast-color);
+  border-bottom: none;
+}
+
+.react-tabs__tab:focus:after {
+  height: 8px;
+  left: -50vw;
+  bottom: -8px;
+  width: 100vw;
+}
+
+.react-tabs__tab--selected {
+  border-bottom: none;
+  color: black;
+}
+
+.react-tabs__tab--selected:after {
+  content: '';
+  position: absolute;
+  background: #fff;
+  height: 8px;
+  bottom: -8px;
+  width: 100%;
+  left: 0;
+}
+
+li#react-tabs-0.react-tabs__tab.react-tabs__tab--selected::after {
+  /*bottom: -8px;
+  height: 8px;
+  left: -20px;
+  right: -20px;
+  background-color: white;*/
+}
