@@ -1,10 +1,10 @@
 import { useStaticQuery, graphql } from 'gatsby';
 
-export const useTables4 = () => {
-  const { allTables4Csv } = useStaticQuery(
+export const useCortex = () => {
+  const { allCortexCsv } = useStaticQuery(
     graphql`
-      query AllTables4Csv {
-        allTables4Csv {
+      query AllCortexCsv {
+        allCortexCsv {
           nodes {
             Gene_Symbol
             CountOfPeptide1
@@ -20,5 +20,5 @@ export const useTables4 = () => {
       }
     `
   );
-  return allTables4Csv.nodes;
+  return allCortexCsv.nodes;
 };

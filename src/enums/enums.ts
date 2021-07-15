@@ -74,3 +74,10 @@ export enum experimentalValidation {
   NGN2 = 2,
   FETAL = 3,
 }
+
+export enum experimentalValidationNames {
+  FETAL = 'Human fetal brain',
+  NGN2 = 'Human iPSC',
+  CORTEX = 'Adult mouse cortex',
+  STRIATUM = 'Adult mouse striatum',
+}

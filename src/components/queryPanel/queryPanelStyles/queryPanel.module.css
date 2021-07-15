@@ -19,5 +19,6 @@
 }
 
 .tabContainer {
-  margin: 0 4em;
+  margin: 0 2em;
+  max-width: calc(85vw - 4em);
 }

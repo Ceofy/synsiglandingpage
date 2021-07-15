@@ -1,10 +1,10 @@
 import { useStaticQuery, graphql } from 'gatsby';
 
-export const useTables2 = () => {
-  const { allTables2Csv } = useStaticQuery(
+export const useNgn2 = () => {
+  const { allNgn2Csv } = useStaticQuery(
     graphql`
-      query AllTables2Csv {
-        allTables2Csv {
+      query AllNgn2Csv {
+        allNgn2Csv {
           nodes {
             Gene_Symbol
             SumCoverage
@@ -28,5 +28,5 @@ export const useTables2 = () => {
       }
     `
   );
-  return allTables2Csv.nodes;
+  return allNgn2Csv.nodes;
 };

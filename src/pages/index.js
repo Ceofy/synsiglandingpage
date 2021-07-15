@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 
 import SEO from '../components/seo';
 import Panel from '../components/panel';
@@ -58,7 +58,7 @@ const IndexPage = () => {
         </p>
         <p>
           {
-            'Manuscript in preparation: Mei et al., "Identifying Synapse Genes Using Global Molecular Signatures." In Preparation.'
+            'Manuscript in preparation: Mei et al., "Identifying Synapse Genes Using Global Molecular Signatures."'
           }
         </p>
         <p>

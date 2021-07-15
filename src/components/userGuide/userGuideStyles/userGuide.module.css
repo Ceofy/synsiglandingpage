@@ -19,3 +19,19 @@
   margin-bottom: 1.5em;
   font-size: 1em;
 }
+
+.userGuide ol {
+  counter-reset: list;
+  list-style: none;
+  counter-increment: list;
+  margin: -0.75em 2em 0.75em;
+}
+
+.userGuide li {
+  margin-left: 1em;
+  margin-bottom: 0;
+}
+
+.userGuide ol > li::marker {
+  content: counter(list) ')\a0';
+}

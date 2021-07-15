@@ -13,10 +13,10 @@ const ColorBar = (props) => {
   const range = props.end - props.start;
   let mid;
   let step;
-  if (props.mid != undefined) {
+  if (props.mid !== undefined) {
     mid = (props.mid - props.start) / range;
   }
-  if (props.step != undefined) {
+  if (props.step !== undefined) {
     step = props.step;
   } else {
     step = 1;
@@ -36,7 +36,7 @@ const ColorBar = (props) => {
 
   const lineWidth = widthNumber / range;
   let intRange;
-  if (step == 1) {
+  if (step === 1) {
     intRange = Math.floor(props.end) - Math.ceil(props.start);
   } else {
     intRange = Math.trunc((props.end - props.start) / step);
@@ -46,21 +46,21 @@ const ColorBar = (props) => {
   let partialLeftLine = false;
   let rightLineWidth;
   let leftLineWidth;
-  if (step == 1) {
-    if (props.end != Math.floor(props.end)) {
+  if (step === 1) {
+    if (props.end !== Math.floor(props.end)) {
       rightLineWidth = lineWidth * (props.end - Math.floor(props.end));
       partialRightLine = true;
     }
-    if (props.start != Math.ceil(props.start)) {
+    if (props.start !== Math.ceil(props.start)) {
       leftLineWidth = lineWidth * (Math.ceil(props.start) - props.start);
       partialLeftLine = true;
     }
   } else {
-    if (props.end % step != 0) {
+    if (props.end % step !== 0) {
       rightLineWidth = lineWidth * (props.end % step);
       partialRightLine = true;
     }
-    if (props.start % step != 0) {
+    if (props.start % step !== 0) {
       leftLineWidth = lineWidth * (step - (props.start % step));
       partialLeftLine = true;
     }
@@ -190,7 +190,7 @@ const ColorBar = (props) => {
         width={props.width}
         height={props.barHeight}
         palette={
-          props.mid != undefined
+          props.mid !== undefined
             ? [
                 { pos: 0.0, color: '#0000ff', id: 0 },
                 { pos: mid, color: '#ffffff', id: 1 },

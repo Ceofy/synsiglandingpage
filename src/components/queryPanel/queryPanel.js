@@ -1,35 +1,39 @@
-import React, { useEffect, useState, forwardRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import QueryForm from './queryForm';
 import QueryResult from './queryResult';
 
 import { useTraining } from '../../hooks/use-training';
-import { useTables2 } from '../../hooks/use-tables2';
-import { useTables3 } from '../../hooks/use-tables3';
-import { useTables4 } from '../../hooks/use-tables4';
-import { useTables5 } from '../../hooks/use-tables5';
+import { useFetal } from '../../hooks/use-fetal';
+import { useNgn2 } from '../../hooks/use-ngn2';
+import { useCortex } from '../../hooks/use-cortex';
+import { useStriatum } from '../../hooks/use-striatum';
 import { usePredicted } from '../../hooks/use-predicted';
 
 import styles from './queryPanelStyles/queryPanel.module.css';
 
-import { dataFields, queryStatuses } from '../../enums/enums';
+import {
+  dataFields,
+  experimentalValidationNames,
+  queryStatuses,
+} from '../../enums/enums';
 import TabsComponent from '../tabs';
 import Table from '../table/table2';
 import UserGuide from '../userGuide';
 
 let synsigDataDict;
-let table2DataDict;
-let table3DataDict;
-let table4DataDict;
-let table5DataDict;
+let fetalDataDict;
+let ngn2DataDict;
+let cortexDataDict;
+let striatumDataDict;
 
 const QueryPanel = (props) => {
   //Acquire table data
-  const tableS2 = useTables2();
-  const tableS3 = useTables3();
-  const tableS4 = useTables4();
-  const tableS5 = useTables5();
+  const fetal = useFetal();
+  const ngn2 = useNgn2();
+  const cortex = useCortex();
+  const striatum = useStriatum();
   const training = useTraining();
   const predicted = usePredicted();
 
@@ -37,10 +41,10 @@ const QueryPanel = (props) => {
   const [queryStatus, setQueryStatus] = useState(queryStatuses.NO_QUERY);
 
   const [synsigDataValues, setsynsigDataValues] = useState(null);
-  const [table2DataValues, setTable2DataValues] = useState(null);
-  const [table3DataValues, setTable3DataValues] = useState(null);
-  const [table4DataValues, setTable4DataValues] = useState(null);
-  const [table5DataValues, setTable5DataValues] = useState(null);
+  const [fetalDataValues, setFetalDataValues] = useState(null);
+  const [ngn2DataValues, setNgn2DataValues] = useState(null);
+  const [cortexDataValues, setCortexDataValues] = useState(null);
+  const [striatumDataValues, setStriatumDataValues] = useState(null);
 
   const [outerTab, setOuterTab] = useState(0);
   const [innerTab, setInnerTab] = useState(0);
@@ -48,10 +52,10 @@ const QueryPanel = (props) => {
   //Get data
   useEffect(() => {
     synsigDataDict = listToDict(props.synsigData, dataFields.GENE);
-    table2DataDict = listToDictofLists(tableS2, dataFields.GENE_SYMBOL);
-    table3DataDict = listToDictofLists(tableS3, dataFields.GENE_SYMBOL);
-    table4DataDict = listToDictofLists(tableS4, dataFields.GENE_SYMBOL);
-    table5DataDict = listToDictofLists(tableS5, dataFields.GENE_SYMBOL);
+    fetalDataDict = listToDictofLists(fetal, dataFields.GENE_SYMBOL);
+    ngn2DataDict = listToDictofLists(ngn2, dataFields.GENE_SYMBOL);
+    cortexDataDict = listToDictofLists(cortex, dataFields.GENE_SYMBOL);
+    striatumDataDict = listToDictofLists(striatum, dataFields.GENE_SYMBOL);
   }, []);
 
   //Handle query
@@ -80,10 +84,10 @@ const QueryPanel = (props) => {
   const handleSearchQuery = (gene) => {
     //Get relevant data
     setsynsigDataValues(synsigDataDict[gene]);
-    setTable2DataValues(table2DataDict[gene]);
-    setTable3DataValues(table3DataDict[gene]);
-    setTable4DataValues(table4DataDict[gene]);
-    setTable5DataValues(table5DataDict[gene]);
+    setFetalDataValues(removeEmptyColumns(fetalDataDict[gene]));
+    setNgn2DataValues(removeEmptyColumns(ngn2DataDict[gene]));
+    setCortexDataValues(removeEmptyColumns(cortexDataDict[gene]));
+    setStriatumDataValues(removeEmptyColumns(striatumDataDict[gene]));
 
     setQueryStatus(queryStatuses.VALID);
     setQuery(gene);
@@ -96,7 +100,7 @@ const QueryPanel = (props) => {
     document.getElementById('searchBar').focus();
   };
 
-  const headers = [
+  const humanHeaders = [
     'Gene Symbol',
     'ΣCoverage',
     'Σ# Proteins',
@@ -119,10 +123,25 @@ const QueryPanel = (props) => {
   return (
     <div className={styles.queryPanel}>
       <QueryForm
-        text={
+        text1={
           queryStatus === queryStatuses.INVALID
             ? 'Gene not found.'
-            : 'Enter the name of a gene to search the SynSig database:'
+            : 'Enter the HGNC symbol of a gene to search the SynSig database:'
+        }
+        text2={
+          queryStatus === queryStatuses.INVALID ? (
+            <div
+              style={{
+                width: '40vw',
+                minWidth: '20em',
+                color: 'gray',
+                marginTop: '1em',
+              }}
+            >
+              Our searchable pool is restricted to genes that meet our criteria
+              for machine learning. See User Guide > Predicted Genes.
+            </div>
+          ) : null
         }
         query={query}
         handleChange={handleChange}
@@ -133,19 +152,19 @@ const QueryPanel = (props) => {
         selectedIndex={outerTab}
         tabNames={[
           'Search Results',
+          'User Guide',
           'Training Genes',
           'Predicted Genes',
-          'Experimental Validation',
-          'User Guide',
+          'Synapse Proteomics Validation',
         ]}
         contents={[
           queryStatus === queryStatuses.VALID ? (
             <QueryResult
               synsigDataValues={synsigDataValues}
-              table2DataValues={table2DataValues}
-              table3DataValues={table3DataValues}
-              table4DataValues={table4DataValues}
-              table5DataValues={table5DataValues}
+              fetalDataValues={fetalDataValues}
+              ngn2DataValues={ngn2DataValues}
+              cortexDataValues={cortexDataValues}
+              striatumDataValues={striatumDataValues}
               handleClose={handleClose}
             />
           ) : (
@@ -153,7 +172,7 @@ const QueryPanel = (props) => {
               Search the SynSig database to view results here
             </div>
           ),
-          ,
+          <UserGuide />,
           <div className={styles.tableContainer}>
             <Table
               clickable={true}
@@ -177,28 +196,27 @@ const QueryPanel = (props) => {
               onSelect={setInnerTab}
               selectedIndex={innerTab}
               tabNames={[
-                'Adult mouse cortex',
-                'Adult mouse striatum',
-                'Human iPSC',
-                'Human fetal brain',
+                experimentalValidationNames.CORTEX,
+                experimentalValidationNames.STRIATUM,
+                experimentalValidationNames.NGN2,
+                experimentalValidationNames.FETAL,
               ]}
               contents={[
                 <div className={styles.tableContainer}>
-                  <Table data={tableS2} headers={headers} />
+                  <Table data={cortex} />
                 </div>,
                 <div className={styles.tableContainer}>
-                  <Table data={tableS3} headers={headers} />
+                  <Table data={striatum} />
                 </div>,
                 <div className={styles.tableContainer}>
-                  <Table data={tableS4} />
+                  <Table data={ngn2} headers={humanHeaders} />
                 </div>,
                 <div className={styles.tableContainer}>
-                  <Table data={tableS5} />
+                  <Table data={fetal} headers={humanHeaders} />
                 </div>,
               ]}
             />
           </div>,
-          <UserGuide />,
         ]}
       ></TabsComponent>
     </div>
@@ -224,6 +242,26 @@ const listToDictofLists = (list, key) => {
     }
   }
   return dict;
+};
+
+const removeEmptyColumns = (list) => {
+  if (list !== undefined) {
+    for (let key in list[0]) {
+      let empty = true;
+      for (let item of list) {
+        if (item[key] != null && item[key] !== '') {
+          empty = false;
+          break;
+        }
+      }
+      if (empty) {
+        for (let item of list) {
+          delete item[key];
+        }
+      }
+    }
+  }
+  return list;
 };
 
 QueryPanel.propTypes = {

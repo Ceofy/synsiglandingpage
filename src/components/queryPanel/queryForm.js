@@ -14,7 +14,7 @@ const QueryForm = (props) => {
 
   return (
     <>
-      <p className={styles.text}>{props.text}</p>
+      <p className={styles.text}>{props.text1}</p>
       <div className={styles.queryForm}>
         <form
           onSubmit={handleSubmit}
@@ -37,12 +37,14 @@ const QueryForm = (props) => {
           <input type='submit' value='Search' className={styles.inputButton} />
         </form>
       </div>
+      <p className={styles.text}>{props.text2}</p>
     </>
   );
 };
 
 QueryForm.propTypes = {
-  text: PropTypes.string,
+  text1: PropTypes.string,
+  text2: PropTypes.string,
   query: PropTypes.string,
   handleSubmit: PropTypes.func,
   handleChange: PropTypes.func,
