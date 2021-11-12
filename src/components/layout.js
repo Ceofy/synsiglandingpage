@@ -29,9 +29,7 @@ const Layout = (props) => {
       <div className={styles.container}>
         <main>{props.children}</main>
         <footer style={{ backgroundColor: props.backgroundColor }}>
-          © {new Date().getFullYear()}, UC San Diego / Built with
-          {` `}
-          <a href='https://www.gatsbyjs.org'>Gatsby</a>
+        Copyright © {new Date().getFullYear()}, The Regents of the University of California, The Cytoscape Consortium. All rights reserved.
         </footer>
       </div>
     </>
