@@ -109,6 +109,12 @@ const QueryResult = (props) => {
   const data = props.synsigDataValues;
   console.log(data);
 
+  const aliases = geneAliases.genesMap[data[dataFields.GENE]];
+
+  const aliasDisplays = aliases != null ? aliases.map(alias => {
+    return <div className={styles.mainText}>{alias}</div>
+  }) : null
+
   return (
     <div className={styles.queryResult}>
       <div className={styles.exContainer}>
@@ -121,9 +127,7 @@ const QueryResult = (props) => {
       </div>
       <div className={styles.mainTitle}>{data[dataFields.GENE]}</div>
       <div className={styles.mainText}>{capitalize(data[dataFields.NAME])}</div>
-      {geneAliases.genesMap[data[dataFields.GENE]].map(alias => {
-        return <div className={styles.mainText}>{alias}</div>
-      })}
+      {aliasDisplays}
       <div className={styles.componentsContainer}>
         {/*Synsig and status component*/}
         {data[dataFields.TRAINING] === 'no' ? (
