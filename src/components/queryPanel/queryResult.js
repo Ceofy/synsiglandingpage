@@ -121,7 +121,7 @@ const QueryResult = (props) => {
       </div>
       <div className={styles.mainTitle}>{data[dataFields.GENE]}</div>
       <div className={styles.mainText}>{capitalize(data[dataFields.NAME])}</div>
-      {geneAliases.genesMap[data[dataFields.GENE]].forEach(alias => {
+      {geneAliases.genesMap[data[dataFields.GENE]].map(alias => {
         return <div className={styles.mainText}>{alias}</div>
       })}
       <div className={styles.componentsContainer}>
