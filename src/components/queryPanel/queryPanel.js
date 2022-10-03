@@ -10,6 +10,7 @@ import { useNgn2 } from '../../hooks/use-ngn2';
 import { useCortex } from '../../hooks/use-cortex';
 import { useStriatum } from '../../hooks/use-striatum';
 import { usePredicted } from '../../hooks/use-predicted';
+import { useGeneAliases } from '../../hooks/use-gene-aliases';
 
 import styles from './queryPanelStyles/queryPanel.module.css';
 
@@ -36,6 +37,7 @@ const QueryPanel = (props) => {
   const striatum = useStriatum();
   const training = useTraining();
   const predicted = usePredicted();
+  const geneAliases = useGeneAliases();
 
   const [query, setQuery] = useState('');
   const [queryStatus, setQueryStatus] = useState(queryStatuses.NO_QUERY);
@@ -70,8 +72,13 @@ const QueryPanel = (props) => {
     event.preventDefault();
 
     const upperQuery = query.toUpperCase();
-    if (upperQuery in synsigDataDict) {
+    const isInSynSigData = upperQuery in synsigDataDict;
+    const isAlias = geneAliases.aliasesMap[query] != null || geneAliases.aliasesMap[upperQuery] != null;
+
+    if (isInSynSigData) {
       handleSearchQuery(upperQuery);
+    } else if (isAlias) {
+      handleSearchQuery(geneAliases.aliasesMap[query] || geneAliases.aliasesMap[upperQuery]);
     } else if (upperQuery.length === 0) {
       setQueryStatus(queryStatuses.NO_QUERY);
       document.getElementById('searchBar').focus();
