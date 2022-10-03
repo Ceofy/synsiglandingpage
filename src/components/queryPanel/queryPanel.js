@@ -73,12 +73,12 @@ const QueryPanel = (props) => {
 
     const upperQuery = query.toUpperCase();
     const isInSynSigData = upperQuery in synsigDataDict;
-    const isAlias = geneAliases.aliasesMap[query] != null || geneAliases.aliasesMap[upperQuery] != null;
+    const aliasCaseInsensitive = Object.keys(geneAliases.aliasesMap).find(key => key.toUpperCase() === upperQuery)
 
     if (isInSynSigData) {
       handleSearchQuery(upperQuery);
-    } else if (isAlias) {
-      handleSearchQuery(geneAliases.aliasesMap[query] || geneAliases.aliasesMap[upperQuery]);
+    } else if (aliasCaseInsensitive) {
+      handleSearchQuery(geneAliases.aliasesMap[aliasCaseInsensitive]);
     } else if (upperQuery.length === 0) {
       setQueryStatus(queryStatuses.NO_QUERY);
       document.getElementById('searchBar').focus();
