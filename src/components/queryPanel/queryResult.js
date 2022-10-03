@@ -12,6 +12,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
+import { useGeneAliases } from '../../hooks/use-gene-aliases';
+
 import {
   dataFields,
   dataFieldNames,
@@ -25,6 +27,8 @@ const QueryResult = (props) => {
   const [expandPanelContents, setExpandPanelContents] = useState(null);
   const [expandOpen, setExpandOpen] = useState(false);
   const [arrowsUp, setArrowsUp] = useState([true, true, true, true]);
+  const geneAliases = useGeneAliases();
+
 
   useEffect(() => {
     setExpandOpen(false);
@@ -117,6 +121,9 @@ const QueryResult = (props) => {
       </div>
       <div className={styles.mainTitle}>{data[dataFields.GENE]}</div>
       <div className={styles.mainText}>{capitalize(data[dataFields.NAME])}</div>
+      {geneAliases.genesMap[data[dataFields.GENE]].forEach(alias => {
+        return <div className={styles.mainText}>{alias}</div>
+      })}
       <div className={styles.componentsContainer}>
         {/*Synsig and status component*/}
         {data[dataFields.TRAINING] === 'no' ? (
