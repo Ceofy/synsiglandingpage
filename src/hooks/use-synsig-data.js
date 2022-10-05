@@ -39,7 +39,7 @@ export const useSynsigData = () => {
             unknown_functions
             Function_Total
             MF_Terms
-            training_positive_example
+            training_positive_examples
           }
         }
       }
