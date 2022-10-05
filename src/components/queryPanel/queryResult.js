@@ -129,7 +129,7 @@ const QueryResult = (props) => {
       {aliasDisplays}
       <div className={styles.componentsContainer}>
         {/*Synsig and status component*/}
-        {data[dataFields.TRAINING] === 'no' ? (
+        {data[dataFields.TRAINING_POSITIVE_EXAMPLE] === 'no' ? (
           <div className={styles.componentDiv} style={{ paddingRight: '1em' }}>
             <div className={styles.title}>SynSig</div>
             <div className={styles.componentsContainer}>
@@ -325,9 +325,9 @@ const QueryResult = (props) => {
               </div>
             </div>
           </div>
-          {data[dataFields.TRAINING] === 'pos' ? (
+          {data[dataFields.TRAINING_POSITIVE_EXAMPLE] === 'pos' ? (
             <div className={styles.title}>SynGO_CC training gene</div>
-          ) : data[dataFields.TRAINING] === 'neg' ? (
+          ) : data[dataFields.TRAINING_POSITIVE_EXAMPLE] === 'neg' ? (
             <div className={styles.title}>Non-SynGO_CC training gene</div>
           ) : null}
         </div>
