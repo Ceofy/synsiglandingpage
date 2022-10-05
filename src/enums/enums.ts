@@ -13,7 +13,7 @@ export enum dataFields {
   SYNSIG = 'SynSig',
   SYNAPSE_STATUS = 'Synapse_Status',
   SYNAPSE_PERCENTILE = 'Synapse_Percentile',
-  TRAINING = 'training',
+  TRAINING = 'training_positive_examples',
   NAME = 'name',
   RECEPTOR_CHANNEL = 'Receptor_Channel',
   KINASE_PHOSPHATASE = 'Kinase_Phosphatase',
