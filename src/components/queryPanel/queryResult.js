@@ -107,7 +107,6 @@ const QueryResult = (props) => {
   };
 
   const data = props.synsigDataValues;
-  console.log(data);
 
   const aliases = geneAliases.genesMap[data[dataFields.GENE]];
 

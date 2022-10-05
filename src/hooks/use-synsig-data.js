@@ -21,7 +21,6 @@ export const useSynsigData = () => {
             SynSig
             Synapse_Status
             Synapse_Percentile
-            training
             name
             Receptor_Channel
             Kinase_Phosphatase
