@@ -110,9 +110,7 @@ const QueryResult = (props) => {
 
   const aliases = geneAliases.genesMap[data[dataFields.GENE]];
 
-  const aliasDisplays = aliases != null ? aliases.map(alias => {
-    return <div className={styles.mainText}>{alias}</div>
-  }) : null
+  const aliasDisplays = aliases != null ? <div className={styles.mainText}>{`Aliases: ${aliases.join(', ')}`}</div> : null
 
   return (
     <div className={styles.queryResult}>
@@ -325,9 +323,9 @@ const QueryResult = (props) => {
               </div>
             </div>
           </div>
-          {data[dataFields.TRAINING] === 'pos' ? (
+          {data[dataFields.TRAINING] === 'yes' ? (
             <div className={styles.title}>SynGO_CC training gene</div>
-          ) : data[dataFields.TRAINING] === 'neg' ? (
+          ) : data[dataFields.TRAINING] === 'no' ? (
             <div className={styles.title}>Non-SynGO_CC training gene</div>
           ) : null}
         </div>
