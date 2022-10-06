@@ -32,6 +32,7 @@ export enum dataFields {
   UNKNOWN_FUNCTIONS = 'unknown_functions',
   MF_TERMS = 'MF_Terms',
   FUNCTION_TOTAL = 'Function_Total',
+  HGNC_ACCESSION = 'HGNC_Accession'
 }
 
 export enum dataFieldNames {

@@ -40,6 +40,7 @@ export const useSynsigData = () => {
             Function_Total
             MF_Terms
             training_positive_examples
+            HGNC_Accession
           }
         }
       }

@@ -125,6 +125,18 @@ const QueryResult = (props) => {
       <div className={styles.mainTitle}>{data[dataFields.GENE]}</div>
       <div className={styles.mainText}>{capitalize(data[dataFields.NAME])}</div>
       {aliasDisplays}
+      <div className={styles.mainText}>
+        <span>{`HGNC Accession:  `}</span>
+        <span>
+        <LinkOut
+          link={`https://www.genenames.org/data/gene-symbol-report/#!/hgnc_id/${data[dataFields.HGNC_ACCESSION]}`}
+        >
+          {data[dataFields.HGNC_ACCESSION]}
+        </LinkOut>
+
+        </span>
+
+      </div>
       <div className={styles.componentsContainer}>
         {/*Synsig and status component*/}
         {data[dataFields.TRAINING] === 'no' ? (
