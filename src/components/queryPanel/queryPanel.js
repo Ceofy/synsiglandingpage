@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import Fuse from "fuse.js";
 
 import QueryForm from "./queryForm";
 import QueryResult from "./queryResult";
@@ -28,6 +29,8 @@ let fetalDataDict;
 let ngn2DataDict;
 let cortexDataDict;
 let striatumDataDict;
+let allGenesAndAliases = [];
+let fuse;
 
 const QueryPanel = (props) => {
   //Acquire table data
@@ -40,6 +43,7 @@ const QueryPanel = (props) => {
   const geneAliases = useGeneAliases();
 
   const [query, setQuery] = useState("");
+  const [autocompleteSuggestions, setAutocompleteSuggestions] = useState([]);
   const [queryStatus, setQueryStatus] = useState(queryStatuses.NO_QUERY);
 
   const [synsigDataValues, setsynsigDataValues] = useState(null);
@@ -58,11 +62,21 @@ const QueryPanel = (props) => {
     ngn2DataDict = listToDictofLists(ngn2, dataFields.GENE_SYMBOL);
     cortexDataDict = listToDictofLists(cortex, dataFields.GENE_SYMBOL);
     striatumDataDict = listToDictofLists(striatum, dataFields.GENE_SYMBOL);
+
+    allGenesAndAliases = [
+      ...Object.keys(synsigDataDict),
+      ...Object.keys(geneAliases.aliasesMap),
+    ];
+
+    fuse = new Fuse(allGenesAndAliases);
   }, []);
 
   //Handle query
   const handleChange = (value) => {
+    const autocompleteSuggestions = fuse.search(value);
     setQuery(value);
+    setAutocompleteSuggestions(autocompleteSuggestions);
+    console.log(autocompleteSuggestions);
     if (queryStatus === queryStatuses.INVALID && value.length === 0) {
       setQueryStatus(queryStatuses.NO_QUERY);
     }
