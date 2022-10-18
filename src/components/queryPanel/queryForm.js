@@ -24,7 +24,9 @@ const QueryForm = (props) => {
           key={suggestion.refIndex}
           value={suggestion.item}
           onClick={handleAutocompleteClick}
-        />
+        >
+          {suggestion.item}
+        </div>
       );
     }
   );
@@ -50,7 +52,7 @@ const QueryForm = (props) => {
               id="searchBar"
             />
           </label>
-          {autocompleteSuggestions.length > 0 ? autocompleteSuggestions : null}}
+          {autocompleteSuggestions.length > 0 ? autocompleteSuggestions : null}
           <input type="submit" value="Search" className={styles.inputButton} />
         </form>
       </div>
