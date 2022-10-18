@@ -23,7 +23,7 @@ const QueryForm = (props) => {
         <div
           key={suggestion.refIndex}
           value={suggestion.item}
-          onClick={handleAutocompleteClick}
+          onClick={(e) => handleAutocompleteClick(e)}
         >
           {suggestion.item}
         </div>
