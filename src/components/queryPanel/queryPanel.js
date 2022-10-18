@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
-import QueryForm from './queryForm';
-import QueryResult from './queryResult';
+import QueryForm from "./queryForm";
+import QueryResult from "./queryResult";
 
-import { useTraining } from '../../hooks/use-training';
-import { useFetal } from '../../hooks/use-fetal';
-import { useNgn2 } from '../../hooks/use-ngn2';
-import { useCortex } from '../../hooks/use-cortex';
-import { useStriatum } from '../../hooks/use-striatum';
-import { usePredicted } from '../../hooks/use-predicted';
-import { useGeneAliases } from '../../hooks/use-gene-aliases';
+import { useTraining } from "../../hooks/use-training";
+import { useFetal } from "../../hooks/use-fetal";
+import { useNgn2 } from "../../hooks/use-ngn2";
+import { useCortex } from "../../hooks/use-cortex";
+import { useStriatum } from "../../hooks/use-striatum";
+import { usePredicted } from "../../hooks/use-predicted";
+import { useGeneAliases } from "../../hooks/use-gene-aliases";
 
-import styles from './queryPanelStyles/queryPanel.module.css';
+import styles from "./queryPanelStyles/queryPanel.module.css";
 
 import {
   dataFields,
   experimentalValidationNames,
   queryStatuses,
-} from '../../enums/enums';
-import TabsComponent from '../tabs';
-import Table from '../table/table2';
-import UserGuide from '../userGuide';
+} from "../../enums/enums";
+import TabsComponent from "../tabs";
+import Table from "../table/table2";
+import UserGuide from "../userGuide";
 
 let synsigDataDict;
 let fetalDataDict;
@@ -39,7 +39,7 @@ const QueryPanel = (props) => {
   const predicted = usePredicted();
   const geneAliases = useGeneAliases();
 
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [queryStatus, setQueryStatus] = useState(queryStatuses.NO_QUERY);
 
   const [synsigDataValues, setsynsigDataValues] = useState(null);
@@ -73,7 +73,9 @@ const QueryPanel = (props) => {
 
     const upperQuery = query.toUpperCase();
     const isInSynSigData = upperQuery in synsigDataDict;
-    const aliasCaseInsensitive = Object.keys(geneAliases.aliasesMap).find(key => key.toUpperCase() === upperQuery)
+    const aliasCaseInsensitive = Object.keys(geneAliases.aliasesMap).find(
+      (key) => key.toUpperCase() === upperQuery
+    );
 
     if (isInSynSigData) {
       handleSearchQuery(upperQuery);
@@ -81,10 +83,10 @@ const QueryPanel = (props) => {
       handleSearchQuery(geneAliases.aliasesMap[aliasCaseInsensitive]);
     } else if (upperQuery.length === 0) {
       setQueryStatus(queryStatuses.NO_QUERY);
-      document.getElementById('searchBar').focus();
+      document.getElementById("searchBar").focus();
     } else {
       setQueryStatus(queryStatuses.INVALID);
-      document.getElementById('searchBar').focus();
+      document.getElementById("searchBar").focus();
     }
   };
 
@@ -103,28 +105,28 @@ const QueryPanel = (props) => {
 
   const handleClose = () => {
     setQueryStatus(queryStatus.NO_QUERY);
-    setQuery('');
-    document.getElementById('searchBar').focus();
+    setQuery("");
+    document.getElementById("searchBar").focus();
   };
 
   const humanHeaders = [
-    'Gene Symbol',
-    'ΣCoverage',
-    'Σ# Proteins',
-    'Σ# Unique Peptides',
-    'Σ# Peptides',
-    'Σ# PSMs',
-    'Score A2',
-    'Coverage A2',
-    '# Peptides A2',
-    '# PSM A2',
-    'Score A4',
-    'Coverage A4',
-    '# Peptides A4',
-    '# PSM A4',
-    '# AAs',
-    'MW [kDa]',
-    'calc. pI',
+    "Gene Symbol",
+    "ΣCoverage",
+    "Σ# Proteins",
+    "Σ# Unique Peptides",
+    "Σ# Peptides",
+    "Σ# PSMs",
+    "Score A2",
+    "Coverage A2",
+    "# Peptides A2",
+    "# PSM A2",
+    "Score A4",
+    "Coverage A4",
+    "# Peptides A4",
+    "# PSM A4",
+    "# AAs",
+    "MW [kDa]",
+    "calc. pI",
   ];
 
   return (
@@ -132,17 +134,17 @@ const QueryPanel = (props) => {
       <QueryForm
         text1={
           queryStatus === queryStatuses.INVALID
-            ? 'Gene not found.'
-            : 'Enter the HGNC symbol of a gene to search the SynSig database:'
+            ? "Gene not found."
+            : "Enter the HGNC symbol of a gene to search the SynSig database:"
         }
         text2={
           queryStatus === queryStatuses.INVALID ? (
             <div
               style={{
-                width: '40vw',
-                minWidth: '20em',
-                color: 'gray',
-                marginTop: '1em',
+                width: "40vw",
+                minWidth: "20em",
+                color: "gray",
+                marginTop: "1em",
               }}
             >
               Our searchable pool is restricted to genes that meet our criteria
@@ -158,11 +160,11 @@ const QueryPanel = (props) => {
         onSelect={setOuterTab}
         selectedIndex={outerTab}
         tabNames={[
-          'Search Results',
-          'User Guide',
-          'Training Genes',
-          'Predicted Genes',
-          'Synapse Proteomics Validation',
+          "Search Results",
+          "User Guide",
+          "Training Genes",
+          "Predicted Genes",
+          "Synapse Proteomics Validation",
         ]}
         contents={[
           queryStatus === queryStatuses.VALID ? (
@@ -175,7 +177,7 @@ const QueryPanel = (props) => {
               handleClose={handleClose}
             />
           ) : (
-            <div style={{ padding: '4em 1em 2em', color: 'gray' }}>
+            <div style={{ padding: "4em 1em 2em", color: "gray" }}>
               Search the SynSig database to view results here
             </div>
           ),
@@ -186,7 +188,7 @@ const QueryPanel = (props) => {
               clickEvent={(gene) => handleSearchQuery(gene)}
               clickEventKey={dataFields.GENE}
               data={training}
-              headers={['Gene', 'Positive/Negative Training Gene']}
+              headers={["Gene", "Positive/Negative Training Gene"]}
             />
           </div>,
           <div className={styles.tableContainer}>
@@ -195,7 +197,7 @@ const QueryPanel = (props) => {
               clickEvent={(gene) => handleSearchQuery(gene)}
               clickEventKey={dataFields.GENE}
               data={predicted}
-              headers={['Gene', 'Synapse Likelihood Score Percentile']}
+              headers={["Gene", "Synapse Likelihood Score Percentile"]}
             />
           </div>,
           <div className={styles.tabContainer}>
@@ -256,7 +258,7 @@ const removeEmptyColumns = (list) => {
     for (let key in list[0]) {
       let empty = true;
       for (let item of list) {
-        if (item[key] != null && item[key] !== '') {
+        if (item[key] != null && item[key] !== "") {
           empty = false;
           break;
         }
