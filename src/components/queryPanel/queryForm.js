@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import Autocomplete from "react-autocomplete";
+
 import styles from "./queryPanelStyles/queryForm.module.css";
 
 const QueryForm = (props) => {
@@ -12,23 +14,11 @@ const QueryForm = (props) => {
     props.handleChange(event.target.value);
   };
 
-  const handleAutocompleteClick = (suggestion) => {
+  const handleAutocompleteClick = (event, suggestion) => {
     props.handleChange(suggestion);
+    props.handleSubmit(event);
   };
 
-  const autocompleteSuggestions = props.autocompleteSuggestions.map(
-    (suggestion) => {
-      return (
-        <div
-          key={suggestion.refIndex}
-          value={suggestion.item}
-          onClick={(e) => handleAutocompleteClick(suggestion.item)}
-        >
-          {suggestion.item}
-        </div>
-      );
-    }
-  );
   return (
     <>
       <p className={styles.text}>{props.text1}</p>
@@ -39,6 +29,21 @@ const QueryForm = (props) => {
           autoComplete="off"
         >
           <label className={styles.label}>
+            <Autocomplete
+              items={props.autocompleteSuggestions}
+              getItemValue={(suggestion) => suggestion.item}
+              renderItem={(suggestion, isHighlighted) => (
+                <div
+                  style={{ background: isHighlighted ? "lightgray" : "white" }}
+                >
+                  {suggestion.label}
+                </div>
+              )}
+              value={props.query}
+              onChange={handleChange}
+              onSelect={handleSubmit}
+            />
+            {/* 
             <input
               type="text"
               value={props.query}
@@ -49,9 +54,8 @@ const QueryForm = (props) => {
                 "form-control form-control-sm ml-0 my-1",
               ].join(" ")}
               id="searchBar"
-            />
+            /> */}
           </label>
-          {autocompleteSuggestions.length > 0 ? autocompleteSuggestions : null}
           <input type="submit" value="Search" className={styles.inputButton} />
         </form>
       </div>
