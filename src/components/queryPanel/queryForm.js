@@ -14,9 +14,9 @@ const QueryForm = (props) => {
     props.handleChange(event.target.value);
   };
 
-  const handleAutocompleteSelect = (event) => {
-    props.handleChange(event.target.value);
-    props.handleSubmit(event);
+  const handleAutocompleteSelect = (value) => {
+    props.handleChange(value);
+    props.handleSubmit({ preventDefault: () => {} });
   };
 
   return (
