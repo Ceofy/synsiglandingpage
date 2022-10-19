@@ -14,8 +14,8 @@ const QueryForm = (props) => {
     props.handleChange(event.target.value);
   };
 
-  const handleAutocompleteClick = (event, suggestion) => {
-    props.handleChange(suggestion);
+  const handleAutocompleteSelect = (event) => {
+    props.handleChange(e.target.value);
     props.handleSubmit(event);
   };
 
@@ -36,12 +36,12 @@ const QueryForm = (props) => {
                 <div
                   style={{ background: isHighlighted ? "lightgray" : "white" }}
                 >
-                  {suggestion.label}
+                  {suggestion.item}
                 </div>
               )}
               value={props.query}
-              onChange={handleChange}
-              onSelect={handleSubmit}
+              onChange={handleAutocompleteSelect}
+              onSelect={handleAutocompleteSelect}
             />
             {/* 
             <input
