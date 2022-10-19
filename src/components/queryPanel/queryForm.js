@@ -30,6 +30,11 @@ const QueryForm = (props) => {
         >
           <label className={styles.label}>
             <Autocomplete
+              className={[
+                styles.inputField,
+                "form-control form-control-sm ml-0 my-1",
+              ].join(" ")}
+              id="searchBar"
               items={props.autocompleteSuggestions}
               getItemValue={(suggestion) => suggestion.item}
               renderItem={(suggestion, isHighlighted) => (
