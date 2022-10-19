@@ -15,7 +15,7 @@ const QueryForm = (props) => {
   };
 
   const handleAutocompleteSelect = (event) => {
-    props.handleChange(e.target.value);
+    props.handleChange(event.target.value);
     props.handleSubmit(event);
   };
 
@@ -40,7 +40,7 @@ const QueryForm = (props) => {
                 </div>
               )}
               value={props.query}
-              onChange={handleAutocompleteSelect}
+              onChange={handleChange}
               onSelect={handleAutocompleteSelect}
             />
             {/* 
