@@ -80,7 +80,7 @@ const QueryPanel = (props) => {
     const autocompleteSuggestions = fuse.search(value);
     setQuery(value);
     // take the first 10 suggestions
-    setAutocompleteSuggestions(autocompleteSuggestions);
+    setAutocompleteSuggestions(autocompleteSuggestions.slice(0, 25));
     console.log(autocompleteSuggestions);
     if (queryStatus === queryStatuses.INVALID && value.length === 0) {
       setQueryStatus(queryStatuses.NO_QUERY);
