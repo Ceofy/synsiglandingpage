@@ -53,6 +53,7 @@ const QueryForm = (props) => {
               position: "absolute",
               overflow: "scroll",
               height: "300px",
+              backgroundColor: "white",
             }}
           />
           <input type="submit" value="Search" className={styles.inputButton} />

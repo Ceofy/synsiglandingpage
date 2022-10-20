@@ -68,7 +68,11 @@ const QueryPanel = (props) => {
       ...Object.keys(geneAliases.aliasesMap),
     ];
 
-    fuse = new Fuse(allGenesAndAliases, {distance: 30, threshold: 0.3, location: 0});
+    fuse = new Fuse(allGenesAndAliases, {
+      distance: 30,
+      threshold: 0.3,
+      location: 0,
+    });
   }, []);
 
   //Handle query
@@ -76,7 +80,7 @@ const QueryPanel = (props) => {
     const autocompleteSuggestions = fuse.search(value);
     setQuery(value);
     // take the first 10 suggestions
-    setAutocompleteSuggestions(autocompleteSuggestions.slice(0, 10));
+    setAutocompleteSuggestions(autocompleteSuggestions.slice(0, 30));
     console.log(autocompleteSuggestions);
     if (queryStatus === queryStatuses.INVALID && value.length === 0) {
       setQueryStatus(queryStatuses.NO_QUERY);
@@ -100,7 +104,7 @@ const QueryPanel = (props) => {
     } else {
       setQueryStatus(queryStatuses.INVALID);
     }
-  }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
