@@ -14,10 +14,6 @@ const QueryForm = (props) => {
     props.handleChange(event.target.value);
   };
 
-  const handleAutocompleteSelect = (value) => {
-    props.handleChange(value);
-    props.handleSubmit({ preventDefault: () => {} });
-  };
 
   return (
     <>
@@ -28,39 +24,38 @@ const QueryForm = (props) => {
           className={styles.form}
           autoComplete="off"
         >
-          <label className={styles.label}>
             <Autocomplete
+            wrapperStyle={{position: 'relative'}}
               className={[
                 styles.inputField,
-                "form-control form-control-sm ml-0 my-1",
               ].join(" ")}
               id="searchBar"
               items={props.autocompleteSuggestions}
               getItemValue={(suggestion) => suggestion.item}
               renderItem={(suggestion, isHighlighted) => (
                 <div
-                  style={{ background: isHighlighted ? "lightgray" : "white" }}
+                  style={{ background: isHighlighted ? "lightgray" : "white", borderLeft: '1px solid gray', borderRight: '1px solid gray',
+                }}
                 >
                   {suggestion.item}
                 </div>
               )}
               value={props.query}
               onChange={handleChange}
-              onSelect={handleAutocompleteSelect}
+              onSelect={props.setAndSubmit}
+              menuStyle={{borderRadius: '3px',
+              boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
+              background: 'rgba(255, 255, 255, 0.9)',
+              padding: '2px 0',
+              left: 0,
+              top: 30,
+              zIndex: 10,
+              fontSize: '90%',
+              position: 'absolute',
+              overflow: 'visible',
+              maxHeight: '50%', // TODO: don't cheat, let it flow to the bottom
+              }}
             />
-            {/* 
-            <input
-              type="text"
-              value={props.query}
-              placeholder="Eg. DLG2"
-              onChange={handleChange}
-              className={[
-                styles.inputField,
-                "form-control form-control-sm ml-0 my-1",
-              ].join(" ")}
-              id="searchBar"
-            /> */}
-          </label>
           <input type="submit" value="Search" className={styles.inputButton} />
         </form>
       </div>

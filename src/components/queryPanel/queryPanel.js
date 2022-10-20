@@ -68,7 +68,7 @@ const QueryPanel = (props) => {
       ...Object.keys(geneAliases.aliasesMap),
     ];
 
-    fuse = new Fuse(allGenesAndAliases);
+    fuse = new Fuse(allGenesAndAliases, {distance: 30, threshold: 0.3, location: 0});
   }, []);
 
   //Handle query
@@ -82,6 +82,25 @@ const QueryPanel = (props) => {
       setQueryStatus(queryStatuses.NO_QUERY);
     }
   };
+
+  const setAndSubmit = (value) => {
+    setQuery(value);
+    const upperQuery = value.toUpperCase();
+    const isInSynSigData = upperQuery in synsigDataDict;
+    const aliasCaseInsensitive = Object.keys(geneAliases.aliasesMap).find(
+      (key) => key.toUpperCase() === upperQuery
+    );
+
+    if (isInSynSigData) {
+      handleSearchQuery(upperQuery);
+    } else if (aliasCaseInsensitive) {
+      handleSearchQuery(geneAliases.aliasesMap[aliasCaseInsensitive]);
+    } else if (upperQuery.length === 0) {
+      setQueryStatus(queryStatuses.NO_QUERY);
+    } else {
+      setQueryStatus(queryStatuses.INVALID);
+    }
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -98,10 +117,8 @@ const QueryPanel = (props) => {
       handleSearchQuery(geneAliases.aliasesMap[aliasCaseInsensitive]);
     } else if (upperQuery.length === 0) {
       setQueryStatus(queryStatuses.NO_QUERY);
-      document.getElementById("searchBar").focus();
     } else {
       setQueryStatus(queryStatuses.INVALID);
-      document.getElementById("searchBar").focus();
     }
   };
 
@@ -121,7 +138,6 @@ const QueryPanel = (props) => {
   const handleClose = () => {
     setQueryStatus(queryStatus.NO_QUERY);
     setQuery("");
-    document.getElementById("searchBar").focus();
   };
 
   const humanHeaders = [
@@ -171,6 +187,7 @@ const QueryPanel = (props) => {
         autocompleteSuggestions={autocompleteSuggestions}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
+        setAndSubmit={setAndSubmit}
       />
       <TabsComponent
         onSelect={setOuterTab}
