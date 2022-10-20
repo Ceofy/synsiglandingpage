@@ -52,7 +52,7 @@ const QueryForm = (props) => {
               fontSize: "90%",
               position: "absolute",
               overflow: "scroll",
-              height: "300px",
+              maxHeight: "300px",
               backgroundColor: "white",
             }}
           />
