@@ -33,7 +33,6 @@ const QueryForm = (props) => {
               <div
                 style={{
                   background: isHighlighted ? "lightgray" : "white",
-                  borderLeft: "1px solid gray",
                 }}
               >
                 {suggestion.item}
