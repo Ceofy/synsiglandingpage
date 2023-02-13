@@ -18,7 +18,7 @@ import ucsd from '../images/ucsd.png';
 import usc from '../images/usc.png';
 import mit from '../images/mit.png';
 import pnnl from '../images/pnnl.png';
-import mcgill from '../images/mcgill.png';
+import mcgillneuro from '../images/neuro.png';
 
 import { useSynsigData } from '../hooks/use-synsig-data';
 
@@ -96,8 +96,8 @@ const IndexPage = () => {
           </LinkOut>
         </div>
         <div className={styles.logosContainer}>
-          <LinkOut link='https://www.mcgill.ca/'>
-            <img src={mcgill} alt='McGill University Logo'></img>
+          <LinkOut link='https://www.mcgill.ca/neuro//'>
+            <img src={mcgillneuro} alt='The Neuro (Montreal Neurological Institute-Hospital) Logo'></img>
           </LinkOut>
         </div>
       </Panel>
