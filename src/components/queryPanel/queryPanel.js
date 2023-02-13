@@ -12,6 +12,7 @@ import { useCortex } from "../../hooks/use-cortex";
 import { useStriatum } from "../../hooks/use-striatum";
 import { usePredicted } from "../../hooks/use-predicted";
 import { useGeneAliases } from "../../hooks/use-gene-aliases";
+import { useIntegrated } from "../../hooks/use-integrated";
 
 import styles from "./queryPanelStyles/queryPanel.module.css";
 
@@ -41,6 +42,8 @@ const QueryPanel = (props) => {
   const training = useTraining();
   const predicted = usePredicted();
   const geneAliases = useGeneAliases();
+  const integrated = useIntegrated();
+
 
   const [query, setQuery] = useState("");
   const [autocompleteSuggestions, setAutocompleteSuggestions] = useState([]);
@@ -201,6 +204,7 @@ const QueryPanel = (props) => {
           "User Guide",
           "Training Genes",
           "Predicted Genes",
+          "Integrated Synapse Proteins",
           "Synapse Proteomics Validation",
         ]}
         contents={[
@@ -237,6 +241,15 @@ const QueryPanel = (props) => {
               headers={["Gene", "Synapse Likelihood Score Percentile"]}
             />
           </div>,
+                    <div className={styles.tableContainer}>
+                    <Table
+                      clickable={true}
+                      clickEvent={(gene) => handleSearchQuery(gene)}
+                      clickEventKey={dataFields.GENE}
+                      data={integrated}
+                      headers={["Gene"]}
+                    />
+                  </div>,
           <div className={styles.tabContainer}>
             <TabsComponent
               onSelect={setInnerTab}
