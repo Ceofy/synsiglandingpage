@@ -204,7 +204,7 @@ const QueryPanel = (props) => {
           "User Guide",
           "Training Genes",
           "Predicted Genes",
-          "Integrated Synapse Proteins",
+          "MO-1200",
           "Synapse Proteomics Validation",
         ]}
         contents={[

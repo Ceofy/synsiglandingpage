@@ -337,8 +337,6 @@ const QueryResult = (props) => {
           </div>
           {data[dataFields.TRAINING] === 'yes' ? (
             <div className={styles.title}>SynGO_CC training gene</div>
-          ) : data[dataFields.TRAINING] === 'no' ? (
-            <div className={styles.title}>Non-SynGO_CC training gene</div>
           ) : null}
         </div>
       </div>
